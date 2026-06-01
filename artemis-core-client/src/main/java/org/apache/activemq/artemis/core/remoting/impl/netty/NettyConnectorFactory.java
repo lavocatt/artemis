@@ -24,8 +24,12 @@ import org.apache.activemq.artemis.spi.core.remoting.BufferHandler;
 import org.apache.activemq.artemis.spi.core.remoting.ClientConnectionLifeCycleListener;
 import org.apache.activemq.artemis.spi.core.remoting.ClientProtocolManager;
 import org.apache.activemq.artemis.spi.core.remoting.Connector;
+import org.apache.activemq.artemis.api.config.annotation.FactoryParams;
+import org.apache.activemq.artemis.api.config.annotation.FactoryType;
 import org.apache.activemq.artemis.spi.core.remoting.ConnectorFactory;
 
+@FactoryType(FactoryType.Kind.CONNECTOR)
+@FactoryParams(constantsClass = org.apache.activemq.artemis.core.remoting.impl.netty.TransportConstants.class)
 public class NettyConnectorFactory implements ConnectorFactory {
 
    boolean serverConnector;

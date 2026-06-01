@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 /**
  * Configuration for broker AMQP message bridge policy managed by a broker connection.
@@ -59,6 +60,7 @@ public class AMQPBridgeBrokerConnectionElement extends AMQPBrokerConnectionEleme
    /**
     * @return the configured bridge from address policy set
     */
+   @ConfigProperty
    public Set<AMQPBridgeAddressPolicyElement> getBridgeFromAddressPolicies() {
       return bridgeFromAddressPolicies;
    }
@@ -77,6 +79,7 @@ public class AMQPBridgeBrokerConnectionElement extends AMQPBrokerConnectionEleme
    /**
     * @return the configured bridge to address policy set
     */
+   @ConfigProperty
    public Set<AMQPBridgeAddressPolicyElement> getBridgeToAddressPolicies() {
       return bridgeToAddressPolicies;
    }
@@ -95,6 +98,7 @@ public class AMQPBridgeBrokerConnectionElement extends AMQPBrokerConnectionEleme
    /**
     * @return the configured bridge from queue policy set
     */
+   @ConfigProperty
    public Set<AMQPBridgeQueuePolicyElement> getBridgeFromQueuePolicies() {
       return bridgeFromQueuePolicies;
    }
@@ -113,6 +117,7 @@ public class AMQPBridgeBrokerConnectionElement extends AMQPBrokerConnectionEleme
    /**
     * @return the configured bridge to queue policy set
     */
+   @ConfigProperty
    public Set<AMQPBridgeQueuePolicyElement> getBridgeToQueuePolicies() {
       return bridgeToQueuePolicies;
    }
@@ -160,6 +165,7 @@ public class AMQPBridgeBrokerConnectionElement extends AMQPBrokerConnectionEleme
    /**
     * @return the collection of configuration properties associated with this bridge element.
     */
+   @ConfigProperty
    public Map<String, Object> getProperties() {
       return properties;
    }

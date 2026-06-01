@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.config.ActiveMQDefaultConfiguration;
 import org.apache.activemq.artemis.api.core.client.ActiveMQClient;
@@ -280,6 +281,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -298,6 +300,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getParentName() {
       return parentName;
    }
@@ -307,6 +310,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getQueueName() {
       return queueName;
    }
@@ -316,6 +320,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getConnectionTTL() {
       return connectionTTL;
    }
@@ -325,6 +330,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getMaxRetryInterval() {
       return maxRetryInterval;
    }
@@ -334,6 +340,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getForwardingAddress() {
       return forwardingAddress;
    }
@@ -343,6 +350,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getFilterString() {
       return filterString;
    }
@@ -352,6 +360,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public TransformerConfiguration getTransformerConfiguration() {
       return transformerConfiguration;
    }
@@ -361,6 +370,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public List<String> getStaticConnectors() {
       return staticConnectors;
    }
@@ -370,6 +380,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getDiscoveryGroupName() {
       return discoveryGroupName;
    }
@@ -379,6 +390,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isHA() {
       return ha;
    }
@@ -388,6 +400,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getRetryInterval() {
       return retryInterval;
    }
@@ -397,6 +410,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public double getRetryIntervalMultiplier() {
       return retryIntervalMultiplier;
    }
@@ -406,6 +420,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getInitialConnectAttempts() {
       return initialConnectAttempts;
    }
@@ -415,6 +430,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getReconnectAttempts() {
       return reconnectAttempts;
    }
@@ -424,6 +440,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isUseDuplicateDetection() {
       return useDuplicateDetection;
    }
@@ -433,6 +450,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getConfirmationWindowSize() {
       return confirmationWindowSize;
    }
@@ -442,6 +460,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getProducerWindowSize() {
       return producerWindowSize;
    }
@@ -451,6 +470,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getClientFailureCheckPeriod() {
       return clientFailureCheckPeriod;
    }
@@ -460,6 +480,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getMinLargeMessageSize() {
       return minLargeMessageSize;
    }
@@ -469,6 +490,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getUser() {
       return user;
    }
@@ -478,6 +500,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getPassword() {
       return password;
    }
@@ -487,10 +510,12 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getCallTimeout() {
       return callTimeout;
    }
 
+   @ConfigProperty
    public int getReconnectAttemptsOnSameNode() {
       return reconnectAttemptsOnSameNode;
    }
@@ -500,6 +525,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isConfigurationManaged() {
       return configurationManaged;
    }
@@ -509,6 +535,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public ComponentConfigurationRoutingType getRoutingType() {
       return routingType;
    }
@@ -518,6 +545,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getConcurrency() {
       return concurrency;
    }
@@ -527,6 +555,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getPendingAckTimeout() {
       return pendingAckTimeout;
    }
@@ -536,6 +565,7 @@ public final class BridgeConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getClientId() {
       return clientId;
    }

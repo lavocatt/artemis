@@ -19,6 +19,7 @@ package org.apache.activemq.artemis.core.config.routing;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 public class NamedPropertyConfiguration implements Serializable {
 
@@ -26,6 +27,7 @@ public class NamedPropertyConfiguration implements Serializable {
 
    private Map<String, String> properties;
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -35,6 +37,7 @@ public class NamedPropertyConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Map<String, String> getProperties() {
       return properties;
    }

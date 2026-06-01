@@ -42,6 +42,7 @@ import org.apache.activemq.artemis.core.transaction.Transaction;
 import org.apache.activemq.artemis.core.transaction.TransactionOperationAbstract;
 import org.apache.activemq.artemis.spi.core.protocol.RemotingConnection;
 import org.apache.activemq.artemis.spi.core.protocol.SessionCallback;
+import org.apache.activemq.artemis.api.config.annotation.InitKeys;
 import org.apache.activemq.artemis.utils.critical.CriticalComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +58,15 @@ import org.slf4j.LoggerFactory;
  * <li>{@code LOG_INTERNAL_EVENTS} - critical failures, bridge deployments, queue creation/destroyed, message expired
  * </ul>
  */
+@InitKeys({
+   @InitKeys.Key(name = "LOG_ALL_EVENTS", type = "boolean"),
+   @InitKeys.Key(name = "LOG_CONNECTION_EVENTS", type = "boolean"),
+   @InitKeys.Key(name = "LOG_SESSION_EVENTS", type = "boolean"),
+   @InitKeys.Key(name = "LOG_CONSUMER_EVENTS", type = "boolean"),
+   @InitKeys.Key(name = "LOG_DELIVERING_EVENTS", type = "boolean"),
+   @InitKeys.Key(name = "LOG_SENDING_EVENTS", type = "boolean"),
+   @InitKeys.Key(name = "LOG_INTERNAL_EVENTS", type = "boolean")
+})
 public class LoggingActiveMQServerPlugin implements ActiveMQServerPlugin, Serializable {
 
    public static final String LOG_ALL_EVENTS = "LOG_ALL_EVENTS";

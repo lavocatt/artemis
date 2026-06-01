@@ -17,6 +17,7 @@
 package org.apache.activemq.artemis.core.config.routing;
 
 import org.apache.activemq.artemis.core.server.routing.KeyType;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -31,6 +32,7 @@ public class ConnectionRouterConfiguration implements Serializable {
    private PoolConfiguration poolConfiguration = null;
    private NamedPropertyConfiguration policyConfiguration = null;
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -40,6 +42,7 @@ public class ConnectionRouterConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public KeyType getKeyType() {
       return keyType;
    }
@@ -49,6 +52,7 @@ public class ConnectionRouterConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getKeyFilter() {
       return keyFilter;
    }
@@ -58,6 +62,7 @@ public class ConnectionRouterConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getLocalTargetFilter() {
       return localTargetFilter;
    }
@@ -67,6 +72,7 @@ public class ConnectionRouterConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public CacheConfiguration getCacheConfiguration() {
       return cacheConfiguration;
    }
@@ -76,6 +82,7 @@ public class ConnectionRouterConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public NamedPropertyConfiguration getPolicyConfiguration() {
       return policyConfiguration;
    }
@@ -85,6 +92,7 @@ public class ConnectionRouterConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public PoolConfiguration getPoolConfiguration() {
       return poolConfiguration;
    }

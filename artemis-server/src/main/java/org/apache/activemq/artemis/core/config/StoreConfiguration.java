@@ -18,6 +18,14 @@ package org.apache.activemq.artemis.core.config;
 
 import java.io.Serializable;
 
+import org.apache.activemq.artemis.api.config.annotation.Discriminator;
+import org.apache.activemq.artemis.core.config.storage.DatabaseStorageConfiguration;
+import org.apache.activemq.artemis.core.config.storage.FileStorageConfiguration;
+
+@Discriminator(field = "storeType", value = {
+   @Discriminator.Mapping(subtype = FileStorageConfiguration.class, name = "FILE"),
+   @Discriminator.Mapping(subtype = DatabaseStorageConfiguration.class, name = "DATABASE")
+})
 public interface StoreConfiguration extends Serializable {
 
    enum StoreType {

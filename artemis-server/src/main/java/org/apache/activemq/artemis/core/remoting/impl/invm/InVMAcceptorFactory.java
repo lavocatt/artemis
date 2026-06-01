@@ -26,8 +26,12 @@ import org.apache.activemq.artemis.spi.core.protocol.ProtocolManager;
 import org.apache.activemq.artemis.spi.core.remoting.Acceptor;
 import org.apache.activemq.artemis.spi.core.remoting.AcceptorFactory;
 import org.apache.activemq.artemis.spi.core.remoting.BufferHandler;
+import org.apache.activemq.artemis.api.config.annotation.FactoryParams;
+import org.apache.activemq.artemis.api.config.annotation.FactoryType;
 import org.apache.activemq.artemis.spi.core.remoting.ServerConnectionLifeCycleListener;
 
+@FactoryType(FactoryType.Kind.ACCEPTOR)
+@FactoryParams(constantsClass = org.apache.activemq.artemis.core.remoting.impl.invm.TransportConstants.class)
 public class InVMAcceptorFactory implements AcceptorFactory {
 
    @Override

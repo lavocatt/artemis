@@ -20,6 +20,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigMap;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.core.TransportConfiguration;
 import org.apache.activemq.artemis.core.config.brokerConnectivity.BrokerConnectConfiguration;
@@ -60,6 +62,8 @@ public class AMQPBrokerConnectConfiguration extends BrokerConnectConfiguration {
       return addElement(amqpBrokerConnectionElement);
    }
 
+   @ConfigProperty
+   @ConfigMap
    public List<AMQPBrokerConnectionElement> getConnectionElements() {
       return connectionElements;
    }
@@ -68,6 +72,7 @@ public class AMQPBrokerConnectConfiguration extends BrokerConnectConfiguration {
       return addElement(amqpFederationElement);
    }
 
+   @ConfigProperty
    public List<AMQPBrokerConnectionElement> getFederations() {
       // This returns all elements not just federation elements, broker properties relies on being able
       // to modify the collection from the getter...it does not actually call the add method, it only
@@ -79,6 +84,7 @@ public class AMQPBrokerConnectConfiguration extends BrokerConnectConfiguration {
       return addElement(amqpBridgeElement);
    }
 
+   @ConfigProperty
    public List<AMQPBrokerConnectionElement> getBridges() {
       // This returns all elements not just bridge elements, broker properties relies on being able
       // to modify the collection from the getter...it does not actually call the add method, it only
@@ -90,6 +96,7 @@ public class AMQPBrokerConnectConfiguration extends BrokerConnectConfiguration {
       return addElement(amqpMirrorBrokerConnectionElement);
    }
 
+   @ConfigProperty
    public List<AMQPBrokerConnectionElement> getMirrors() {
       return connectionElements;
    }
@@ -98,6 +105,7 @@ public class AMQPBrokerConnectConfiguration extends BrokerConnectConfiguration {
       return addElement(element);
    }
 
+   @ConfigProperty
    public List<AMQPBrokerConnectionElement> getPeers() {
       return connectionElements;
    }
@@ -106,6 +114,7 @@ public class AMQPBrokerConnectConfiguration extends BrokerConnectConfiguration {
       return addElement(element);
    }
 
+   @ConfigProperty
    public List<AMQPBrokerConnectionElement> getSenders() {
       return connectionElements;
    }
@@ -114,6 +123,7 @@ public class AMQPBrokerConnectConfiguration extends BrokerConnectConfiguration {
       return addElement(element);
    }
 
+   @ConfigProperty
    public List<AMQPBrokerConnectionElement> getReceivers() {
       return connectionElements;
    }
@@ -126,6 +136,8 @@ public class AMQPBrokerConnectConfiguration extends BrokerConnectConfiguration {
       this.transportConfigurations = parser.newObject(transportURI, getName());
    }
 
+   @ConfigProperty
+   @ConfigMap
    public List<TransportConfiguration> getTransportConfigurations() throws Exception {
       if (transportConfigurations == null) {
          parseURI();

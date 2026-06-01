@@ -1,0 +1,999 @@
+{
+  "AMQPConnection": {
+    "_sample": {
+      "autostart": true,
+      "bridges": {},
+      "connectionElements": {},
+      "federations": {},
+      "lockCoordinator": "example",
+      "mirrors": {},
+      "name": "example",
+      "password": "example",
+      "peers": {},
+      "receivers": {},
+      "reconnectAttempts": 1,
+      "retryInterval": 1,
+      "senders": {},
+      "transportConfigurations": {},
+      "uri": "example",
+      "user": "example"
+    }
+  },
+  "AMQPConnections": {
+    "_sample": {
+      "autostart": true,
+      "bridges": {},
+      "connectionElements": {},
+      "federations": {},
+      "lockCoordinator": "example",
+      "mirrors": {},
+      "name": "example",
+      "password": "example",
+      "peers": {},
+      "receivers": {},
+      "reconnectAttempts": 1,
+      "retryInterval": 1,
+      "senders": {},
+      "transportConfigurations": {},
+      "uri": "example",
+      "user": "example"
+    }
+  },
+  "HAPolicyConfiguration": {
+    "type": "PRIMARY_ONLY"
+  },
+  "IDCacheSize": 1,
+  "JDBC": true,
+  "JMXDomain": "example",
+  "JMXManagementEnabled": true,
+  "JMXNotificationEnabled": true,
+  "JMXUseBrokerName": true,
+  "acceptorConfigurations": {},
+  "addressConfigurations": {
+    "_sample": {
+      "name": "example",
+      "queueConfigs": {
+        "_sample": {
+          "address": "example",
+          "addressNull": true,
+          "autoDeleteDelay": 1,
+          "autoDeleteMessageCount": 1,
+          "consumerPriority": 1,
+          "consumersBeforeDispatch": 1,
+          "delayBeforeDispatch": 1,
+          "filterString": "example",
+          "groupBuckets": 1,
+          "groupFirstKey": "example",
+          "id": 1,
+          "lastValueKey": "example",
+          "maxConsumers": 1,
+          "mirrorQueue": true,
+          "name": "example",
+          "ringSize": 1,
+          "routingType": "MULTICAST",
+          "user": "example"
+        }
+      },
+      "queueConfigurations": {
+        "_sample": {
+          "address": "example",
+          "consumersBeforeDispatch": 1,
+          "delayBeforeDispatch": 1,
+          "durable": true,
+          "filterString": "example",
+          "groupBuckets": 1,
+          "groupFirstKey": "example",
+          "lastValueKey": "example",
+          "maxConsumers": 1,
+          "name": "example",
+          "purgeOnNoConsumers": true,
+          "ringSize": 1,
+          "routingType": "MULTICAST",
+          "user": "example"
+        }
+      },
+      "routingTypes": []
+    }
+  },
+  "addressQueueScanPeriod": 1,
+  "addressSettings": {
+    "_sample": {
+      "IDCacheSize": 1,
+      "addressFullMessagePolicy": "DROP",
+      "autoCreateDeadLetterResources": true,
+      "autoCreateExpiryResources": true,
+      "autoCreateJmsQueues": true,
+      "autoCreateJmsTopics": true,
+      "autoDeleteAddressesDelay": 1,
+      "autoDeleteAddressesSkipUsageCheck": true,
+      "autoDeleteJmsQueues": true,
+      "autoDeleteJmsTopics": true,
+      "autoDeleteQueuesDelay": 1,
+      "autoDeleteQueuesMessageCount": 1,
+      "autoDeleteQueuesSkipUsageCheck": true,
+      "configDeleteAddresses": "OFF",
+      "configDeleteDiverts": "OFF",
+      "configDeleteQueues": "OFF",
+      "deadLetterAddress": "example",
+      "deadLetterQueuePrefix": "example",
+      "deadLetterQueueSuffix": "example",
+      "defaultAddressRoutingType": "MULTICAST",
+      "defaultConsumerWindowSize": 1,
+      "defaultConsumersBeforeDispatch": 1,
+      "defaultDelayBeforeDispatch": 1,
+      "defaultGroupBuckets": 1,
+      "defaultGroupFirstKey": "example",
+      "defaultGroupRebalance": true,
+      "defaultGroupRebalancePauseDispatch": true,
+      "defaultLastValueKey": "example",
+      "defaultLastValueQueue": true,
+      "defaultMaxConsumers": 1,
+      "defaultNonDestructive": true,
+      "defaultQueueRoutingType": "MULTICAST",
+      "defaultRingSize": 1,
+      "diskFullMessagePolicy": "DROP",
+      "enableIngressTimestamp": true,
+      "enableMetrics": true,
+      "encodeSize": 1,
+      "expiryAddress": "example",
+      "expiryDelay": 1,
+      "expiryQueuePrefix": "example",
+      "expiryQueueSuffix": "example",
+      "initialQueueBufferSize": 1,
+      "managementBrowsePageSize": 1,
+      "managementMessageAttributeSizeLimit": 1,
+      "maxDeliveryAttempts": 1,
+      "maxExpiryDelay": 1,
+      "maxReadPageBytes": 1,
+      "maxReadPageMessages": 1,
+      "maxRedeliveryDelay": 1,
+      "maxSizeBytes": 1,
+      "maxSizeBytesRejectThreshold": 1,
+      "maxSizeMessages": 1,
+      "messageCounterHistoryDayLimit": 1,
+      "minExpiryDelay": 1,
+      "pageCacheMaxSize": 1,
+      "pageFullMessagePolicy": "DROP",
+      "pageLimitBytes": 1,
+      "pageLimitMessages": 1,
+      "pageSizeBytes": 1,
+      "prefetchPageBytes": 1,
+      "prefetchPageMessages": 1,
+      "queuePrefetch": 1,
+      "redeliveryDelay": 1,
+      "redistributionDelay": 1,
+      "retroactiveMessageCount": 1,
+      "sendToDLAOnNoRoute": true,
+      "slowConsumerCheckPeriod": 1,
+      "slowConsumerPolicy": "KILL",
+      "slowConsumerThreshold": 1,
+      "slowConsumerThresholdMeasurementUnit": "MESSAGES_PER_SECOND"
+    }
+  },
+  "addressesSettings": {
+    "_sample": {
+      "IDCacheSize": 1,
+      "addressFullMessagePolicy": "DROP",
+      "autoCreateDeadLetterResources": true,
+      "autoCreateExpiryResources": true,
+      "autoCreateJmsQueues": true,
+      "autoCreateJmsTopics": true,
+      "autoDeleteAddressesDelay": 1,
+      "autoDeleteAddressesSkipUsageCheck": true,
+      "autoDeleteJmsQueues": true,
+      "autoDeleteJmsTopics": true,
+      "autoDeleteQueuesDelay": 1,
+      "autoDeleteQueuesMessageCount": 1,
+      "autoDeleteQueuesSkipUsageCheck": true,
+      "configDeleteAddresses": "OFF",
+      "configDeleteDiverts": "OFF",
+      "configDeleteQueues": "OFF",
+      "deadLetterAddress": "example",
+      "deadLetterQueuePrefix": "example",
+      "deadLetterQueueSuffix": "example",
+      "defaultAddressRoutingType": "MULTICAST",
+      "defaultConsumerWindowSize": 1,
+      "defaultConsumersBeforeDispatch": 1,
+      "defaultDelayBeforeDispatch": 1,
+      "defaultGroupBuckets": 1,
+      "defaultGroupFirstKey": "example",
+      "defaultGroupRebalance": true,
+      "defaultGroupRebalancePauseDispatch": true,
+      "defaultLastValueKey": "example",
+      "defaultLastValueQueue": true,
+      "defaultMaxConsumers": 1,
+      "defaultNonDestructive": true,
+      "defaultQueueRoutingType": "MULTICAST",
+      "defaultRingSize": 1,
+      "diskFullMessagePolicy": "DROP",
+      "enableIngressTimestamp": true,
+      "enableMetrics": true,
+      "encodeSize": 1,
+      "expiryAddress": "example",
+      "expiryDelay": 1,
+      "expiryQueuePrefix": "example",
+      "expiryQueueSuffix": "example",
+      "initialQueueBufferSize": 1,
+      "managementBrowsePageSize": 1,
+      "managementMessageAttributeSizeLimit": 1,
+      "maxDeliveryAttempts": 1,
+      "maxExpiryDelay": 1,
+      "maxReadPageBytes": 1,
+      "maxReadPageMessages": 1,
+      "maxRedeliveryDelay": 1,
+      "maxSizeBytes": 1,
+      "maxSizeBytesRejectThreshold": 1,
+      "maxSizeMessages": 1,
+      "messageCounterHistoryDayLimit": 1,
+      "minExpiryDelay": 1,
+      "pageCacheMaxSize": 1,
+      "pageFullMessagePolicy": "DROP",
+      "pageLimitBytes": 1,
+      "pageLimitMessages": 1,
+      "pageSizeBytes": 1,
+      "prefetchPageBytes": 1,
+      "prefetchPageMessages": 1,
+      "queuePrefetch": 1,
+      "redeliveryDelay": 1,
+      "redistributionDelay": 1,
+      "retroactiveMessageCount": 1,
+      "sendToDLAOnNoRoute": true,
+      "slowConsumerCheckPeriod": 1,
+      "slowConsumerPolicy": "KILL",
+      "slowConsumerThreshold": 1,
+      "slowConsumerThresholdMeasurementUnit": "MESSAGES_PER_SECOND"
+    }
+  },
+  "amqpUseCoreSubscriptionNaming": true,
+  "asyncConnectionExecutionEnabled": true,
+  "authenticationCacheSize": 1,
+  "authorizationCacheSize": 1,
+  "bindingsDirectory": "example",
+  "bindingsLocation": "example",
+  "bridgeConfigurations": {
+    "_sample": {
+      "HA": true,
+      "callTimeout": 1,
+      "clientFailureCheckPeriod": 1,
+      "clientId": "example",
+      "concurrency": 1,
+      "configurationManaged": true,
+      "confirmationWindowSize": 1,
+      "connectionTTL": 1,
+      "discoveryGroupName": "example",
+      "encodeSize": 1,
+      "filterString": "example",
+      "forwardingAddress": "example",
+      "initialConnectAttempts": 1,
+      "maxRetryInterval": 1,
+      "minLargeMessageSize": 1,
+      "name": "example",
+      "parentName": "example",
+      "password": "example",
+      "pendingAckTimeout": 1,
+      "producerWindowSize": 1,
+      "queueName": "example",
+      "reconnectAttempts": 1,
+      "reconnectAttemptsOnSameNode": 1,
+      "retryInterval": 1,
+      "routingType": "MULTICAST",
+      "staticConnectors": [],
+      "transformerConfiguration": {
+        "className": "example",
+        "properties": {
+          "_sample": "example"
+        }
+      },
+      "useDuplicateDetection": true,
+      "user": "example"
+    }
+  },
+  "broadcastGroupConfigurations": {
+    "_sample": {
+      "broadcastPeriod": 1,
+      "connectorInfos": [],
+      "endpointFactory": {
+        "groupAddress": "example",
+        "groupPort": 1,
+        "localBindAddress": "example",
+        "localBindPort": 1
+      },
+      "name": "example"
+    }
+  },
+  "brokerAMQPFederationPlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "brokerAddressPlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "brokerBindingPlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "brokerBridgePlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "brokerConnectionPlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "brokerConsumerPlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "brokerCriticalPlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "brokerFederationPlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "brokerInstance": "example",
+  "brokerMessagePlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "brokerPlugins": {
+    "_sample": {
+      "init": {
+        "name": "example",
+        "periodSeconds": 1,
+        "accuracyWindowSeconds": 1,
+        "acceptorMatchRegex": "example"
+      }
+    }
+  },
+  "brokerPropertiesKeySurround": "example",
+  "brokerPropertiesRemoveValue": "example",
+  "brokerQueuePlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "brokerResourcePlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "brokerSessionPlugins": {
+    "_sample": {
+      "init": {
+        "LOG_ALL_EVENTS": true,
+        "LOG_CONNECTION_EVENTS": true,
+        "LOG_SESSION_EVENTS": true,
+        "LOG_CONSUMER_EVENTS": true,
+        "LOG_DELIVERING_EVENTS": true,
+        "LOG_SENDING_EVENTS": true,
+        "LOG_INTERNAL_EVENTS": true,
+        "UNAVAILABLE": "example"
+      }
+    }
+  },
+  "checkForPrimaryServer": true,
+  "clusterConfigurations": {
+    "_sample": {
+      "address": "example",
+      "allowDirectConnectionsOnly": true,
+      "callFailoverTimeout": 1,
+      "callTimeout": 1,
+      "clientFailureCheckPeriod": 1,
+      "clientId": "example",
+      "clusterNotificationAttempts": 1,
+      "clusterNotificationInterval": 1,
+      "compositeMembers": {
+        "components": [],
+        "fragment": "example",
+        "host": "example",
+        "path": "example",
+        "scheme": "example"
+      },
+      "confirmationWindowSize": 1,
+      "connectionTTL": 1,
+      "connectorName": "example",
+      "discoveryGroupName": "example",
+      "duplicateDetection": true,
+      "initialConnectAttempts": 1,
+      "maxHops": 1,
+      "maxRetryInterval": 1,
+      "messageLoadBalancingType": "OFF",
+      "minLargeMessageSize": 1,
+      "name": "example",
+      "producerWindowSize": 1,
+      "reconnectAttempts": 1,
+      "retryInterval": 1,
+      "staticConnectors": [],
+      "topologyScannerAttempts": 1
+    }
+  },
+  "clusterPassword": "example",
+  "clusterUser": "example",
+  "clustered": true,
+  "configurationFileRefreshPeriod": 1,
+  "configurationUrl": "example",
+  "connectionRouters": {
+    "_sample": {
+      "cacheConfiguration": {
+        "persisted": true,
+        "timeout": 1
+      },
+      "keyFilter": "example",
+      "keyType": "CLIENT_ID",
+      "localTargetFilter": "example",
+      "name": "example",
+      "policyConfiguration": {
+        "name": "example",
+        "properties": {
+          "_sample": "example"
+        }
+      },
+      "poolConfiguration": {
+        "checkPeriod": 1,
+        "clusterConnection": "example",
+        "discoveryGroupName": "example",
+        "localTargetEnabled": true,
+        "password": "example",
+        "quorumSize": 1,
+        "quorumTimeout": 1,
+        "staticConnectors": [],
+        "username": "example"
+      }
+    }
+  },
+  "connectionTTLOverride": 1,
+  "connectionTtlCheckInterval": 1,
+  "connectorConfigurations": {},
+  "connectorServiceConfigurations": {
+    "_sample": {
+      "connectorName": "example",
+      "factoryClassName": "example",
+      "name": "example",
+      "params": {}
+    }
+  },
+  "createBindingsDir": true,
+  "createJournalDir": true,
+  "criticalAnalyzer": true,
+  "criticalAnalyzerCheckPeriod": 1,
+  "criticalAnalyzerPolicy": "LOG",
+  "criticalAnalyzerTimeout": 1,
+  "discoveryGroupConfigurations": {
+    "_sample": {
+      "broadcastEndpointFactory": {
+        "groupAddress": "example",
+        "groupPort": 1,
+        "localBindAddress": "example",
+        "localBindPort": 1
+      },
+      "discoveryInitialWaitTimeout": 1,
+      "name": "example",
+      "refreshTimeout": 1,
+      "stoppingTimeout": 1
+    }
+  },
+  "diskScanPeriod": 1,
+  "divertConfigurations": {
+    "_sample": {
+      "address": "example",
+      "encodeSize": 1,
+      "exclusive": true,
+      "filterString": "example",
+      "forwardingAddress": "example",
+      "name": "example",
+      "routingName": "example",
+      "routingType": "MULTICAST",
+      "transformerConfiguration": {
+        "className": "example",
+        "properties": {
+          "_sample": "example"
+        }
+      }
+    }
+  },
+  "failoverOnServerShutdown": true,
+  "federationConfigurations": {
+    "_sample": {
+      "addressPolicies": {},
+      "credentials": {
+        "password": "example",
+        "user": "example"
+      },
+      "downstreamConfigurations": {
+        "_sample": {
+          "connectionConfiguration": {
+            "HA": true,
+            "callFailoverTimeout": 1,
+            "callTimeout": 1,
+            "circuitBreakerTimeout": 1,
+            "clientFailureCheckPeriod": 1,
+            "connectionTTL": 1,
+            "discoveryGroupName": "example",
+            "initialConnectAttempts": 1,
+            "maxRetryInterval": 1,
+            "password": "example",
+            "priorityAdjustment": 1,
+            "reconnectAttempts": 1,
+            "retryInterval": 1,
+            "shareConnection": true,
+            "staticConnectors": [],
+            "username": "example"
+          },
+          "name": "example",
+          "policyRefs": [],
+          "upstreamConfiguration": {
+            "combinedParams": {},
+            "extraParams": {},
+            "factoryClassName": "example",
+            "lockCoordinator": "example",
+            "name": "example",
+            "params": {}
+          },
+          "upstreamConfigurationRef": "example"
+        }
+      },
+      "federationPolicyMap": {},
+      "name": "example",
+      "policySets": {},
+      "queuePolicies": {},
+      "transformerConfigurationMap": {
+        "_sample": {
+          "name": "example",
+          "transformerConfiguration": {
+            "className": "example",
+            "properties": {
+              "_sample": "example"
+            }
+          }
+        }
+      },
+      "transformerConfigurations": {
+        "_sample": {
+          "name": "example",
+          "transformerConfiguration": {
+            "className": "example",
+            "properties": {
+              "_sample": "example"
+            }
+          }
+        }
+      },
+      "upstreamConfigurations": {
+        "_sample": {
+          "connectionConfiguration": {
+            "HA": true,
+            "callFailoverTimeout": 1,
+            "callTimeout": 1,
+            "circuitBreakerTimeout": 1,
+            "clientFailureCheckPeriod": 1,
+            "connectionTTL": 1,
+            "discoveryGroupName": "example",
+            "initialConnectAttempts": 1,
+            "maxRetryInterval": 1,
+            "password": "example",
+            "priorityAdjustment": 1,
+            "reconnectAttempts": 1,
+            "retryInterval": 1,
+            "shareConnection": true,
+            "staticConnectors": [],
+            "username": "example"
+          },
+          "name": "example",
+          "policyRefs": []
+        }
+      }
+    }
+  },
+  "federationDownstreamAuthorization": [],
+  "fileDeployerScanPeriod": 1,
+  "globalMaxMessages": 1,
+  "globalMaxSize": 1,
+  "globalMaxSizePercentOfJvmMaxMemory": 1,
+  "gracefulShutdownEnabled": true,
+  "gracefulShutdownTimeout": 1,
+  "groupingHandlerConfiguration": {
+    "address": "example",
+    "groupTimeout": 1,
+    "name": "example",
+    "reaperPeriod": 1,
+    "timeout": 1,
+    "type": "LOCAL"
+  },
+  "incomingInterceptorClassNames": [],
+  "internalNamingPrefix": "example",
+  "jaasConfigs": {
+    "_sample": {
+      "modules": {},
+      "name": "example"
+    }
+  },
+  "journalBufferSize_AIO": 1,
+  "journalBufferSize_NIO": 1,
+  "journalBufferTimeout_AIO": 1,
+  "journalBufferTimeout_NIO": 1,
+  "journalCompactMinFiles": 1,
+  "journalCompactPercentage": 1,
+  "journalDatasync": true,
+  "journalDeviceBlockSize": 1,
+  "journalDirectory": "example",
+  "journalFileOpenTimeout": 1,
+  "journalFileSize": 1,
+  "journalLocation": "example",
+  "journalLockAcquisitionTimeout": 1,
+  "journalMaxAtticFiles": 1,
+  "journalMaxIO_AIO": 1,
+  "journalMaxIO_NIO": 1,
+  "journalMinFiles": 1,
+  "journalPoolFiles": 1,
+  "journalRetentionDirectory": "DAYS",
+  "journalRetentionLocation": "example",
+  "journalRetentionMaxBytes": 1,
+  "journalRetentionPeriod": 1,
+  "journalSyncNonTransactional": true,
+  "journalSyncTransactional": true,
+  "journalType": "ASYNCIO",
+  "largeMessageSync": true,
+  "largeMessagesDirectory": "example",
+  "largeMessagesLocation": "example",
+  "literalMatchMarkers": "example",
+  "lockCoordinatorConfigurations": {
+    "_sample": {
+      "checkPeriod": 1,
+      "className": "example",
+      "lockId": "example",
+      "name": "example",
+      "properties": {
+        "_sample": "example"
+      }
+    }
+  },
+  "logJournalWriteRate": true,
+  "managementAddress": "example",
+  "managementMessageRbac": true,
+  "managementNotificationAddress": "example",
+  "managementRbacPrefix": "example",
+  "maxDiskUsage": 1,
+  "maxRedeliveryRecords": 1,
+  "memoryMeasureInterval": 1,
+  "memoryWarningThreshold": 1,
+  "messageCounterEnabled": true,
+  "messageCounterMaxDayHistory": 1,
+  "messageCounterSamplePeriod": 1,
+  "messageExpiryScanPeriod": 1,
+  "messageExpiryThreadPriority": 1,
+  "metricsConfiguration": {
+    "executorServices": true,
+    "fileDescriptors": true,
+    "jvmGc": true,
+    "jvmMemory": true,
+    "jvmThread": true,
+    "logging": true,
+    "nettyPool": true,
+    "plugin": {
+      "init": {
+        "_sample": "example"
+      },
+      "registry": {
+        "closed": true,
+        "meters": {
+          "_sample": {
+            "id": {
+              "baseUnit": "example",
+              "description": "example",
+              "name": "example",
+              "tags": {
+                "_sample": {
+                  "key": "example",
+                  "value": "example"
+                }
+              },
+              "type": "COUNTER"
+            }
+          }
+        }
+      }
+    },
+    "processor": true,
+    "securityCaches": true,
+    "uptime": true
+  },
+  "metricsPlugin": {
+    "init": {
+      "_sample": "example"
+    },
+    "registry": {
+      "closed": true,
+      "meters": {
+        "_sample": {
+          "id": {
+            "baseUnit": "example",
+            "description": "example",
+            "name": "example",
+            "tags": {
+              "_sample": {
+                "key": "example",
+                "value": "example"
+              }
+            },
+            "type": "COUNTER"
+          }
+        }
+      }
+    }
+  },
+  "minDiskFree": 1,
+  "mirrorAckManagerPageAttempts": 1,
+  "mirrorAckManagerQueueAttempts": 1,
+  "mirrorAckManagerRetryDelay": 1,
+  "mirrorAckManagerWarnUnacked": true,
+  "mirrorPageTransaction": true,
+  "mqttSessionScanInterval": 1,
+  "mqttSessionStatePersistenceTimeout": 1,
+  "mqttSubscriptionPersistenceEnabled": true,
+  "name": "example",
+  "networkCheckList": "example",
+  "networkCheckNIC": "example",
+  "networkCheckPeriod": 1,
+  "networkCheckPing6Command": "example",
+  "networkCheckPingCommand": "example",
+  "networkCheckTimeout": 1,
+  "networkCheckURLList": "example",
+  "nodeManagerLockDirectory": "example",
+  "nodeManagerLockLocation": "example",
+  "outgoingInterceptorClassNames": [],
+  "pageMaxConcurrentIO": 1,
+  "pageSyncTimeout": 1,
+  "pagingDirectory": "example",
+  "pagingLocation": "example",
+  "passwordCodec": "example",
+  "persistDeliveryCountBeforeDelivery": true,
+  "persistIDCache": true,
+  "persistenceEnabled": true,
+  "populateValidatedUser": true,
+  "provider": {},
+  "purgePageFolders": true,
+  "queueConfigs": {
+    "_sample": {
+      "address": "example",
+      "addressNull": true,
+      "autoDeleteDelay": 1,
+      "autoDeleteMessageCount": 1,
+      "consumerPriority": 1,
+      "consumersBeforeDispatch": 1,
+      "delayBeforeDispatch": 1,
+      "filterString": "example",
+      "groupBuckets": 1,
+      "groupFirstKey": "example",
+      "id": 1,
+      "lastValueKey": "example",
+      "maxConsumers": 1,
+      "mirrorQueue": true,
+      "name": "example",
+      "ringSize": 1,
+      "routingType": "MULTICAST",
+      "user": "example"
+    }
+  },
+  "queueConfigurations": {
+    "_sample": {
+      "address": "example",
+      "consumersBeforeDispatch": 1,
+      "delayBeforeDispatch": 1,
+      "durable": true,
+      "filterString": "example",
+      "groupBuckets": 1,
+      "groupFirstKey": "example",
+      "lastValueKey": "example",
+      "maxConsumers": 1,
+      "name": "example",
+      "purgeOnNoConsumers": true,
+      "ringSize": 1,
+      "routingType": "MULTICAST",
+      "user": "example"
+    }
+  },
+  "readWholePage": true,
+  "rejectEmptyValidatedUser": true,
+  "resolveProtocols": true,
+  "resourceLimitSettings": {
+    "_sample": {
+      "encodeSize": 1,
+      "match": "example",
+      "maxConnections": 1,
+      "maxQueues": 1,
+      "maxSessions": 1,
+      "name": "example"
+    }
+  },
+  "scheduledThreadPoolMaxSize": 1,
+  "securityEnabled": true,
+  "securityInvalidationInterval": 1,
+  "securityRoleNameMappings": {
+    "_sample": "example"
+  },
+  "securityRoles": {
+    "_sample": {
+      "_sample": {
+        "browse": true,
+        "consume": true,
+        "createAddress": true,
+        "createDurableQueue": true,
+        "createNonDurableQueue": true,
+        "deleteAddress": true,
+        "deleteDurableQueue": true,
+        "deleteNonDurableQueue": true,
+        "edit": true,
+        "manage": true,
+        "name": "example",
+        "send": true,
+        "view": true
+      }
+    }
+  },
+  "securitySettingPlugins": {
+    "_sample": {
+      "init": {
+        "_sample": "example"
+      },
+      "securityRepository": {
+        "cacheSize": 1,
+        "default": {}
+      },
+      "securityRoles": {
+        "_sample": {
+          "_sample": {
+            "browse": true,
+            "consume": true,
+            "createAddress": true,
+            "createDurableQueue": true,
+            "createNonDurableQueue": true,
+            "deleteAddress": true,
+            "deleteDurableQueue": true,
+            "deleteNonDurableQueue": true,
+            "edit": true,
+            "manage": true,
+            "name": "example",
+            "send": true,
+            "view": true
+          }
+        }
+      }
+    }
+  },
+  "serverDumpInterval": 1,
+  "status": "example",
+  "storeConfiguration": {
+    "storeType": "FILE"
+  },
+  "suppressSessionNotifications": true,
+  "systemPropertyPrefix": "example",
+  "temporaryQueueNamespace": "example",
+  "threadPoolMaxSize": 1,
+  "transactionTimeout": 1,
+  "transactionTimeoutScanPeriod": 1,
+  "type": "example",
+  "usingDatabasePersistence": true,
+  "uuidNamespace": "example",
+  "viewPermissionMethodMatchPattern": "example",
+  "wildcardConfiguration": {
+    "anyWords": "example",
+    "anyWordsString": "example",
+    "delimiter": "example",
+    "delimiterString": "example",
+    "routingEnabled": true,
+    "singleWord": "example",
+    "singleWordString": "example"
+  },
+  "wildcardRoutingEnabled": true
+}

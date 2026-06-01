@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.core.client.ActiveMQClientMessageBundle;
 import org.apache.activemq.artemis.core.remoting.impl.TransportConfigurationUtil;
@@ -162,6 +163,7 @@ public class TransportConfiguration implements Serializable {
    /**
     * {@return the name of this TransportConfiguration}
     */
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -173,6 +175,7 @@ public class TransportConfiguration implements Serializable {
    /**
     * {@return the class name of ConnectorFactory being used by this TransportConfiguration}
     */
+   @ConfigProperty
    public String getFactoryClassName() {
       return factoryClassName;
    }
@@ -180,14 +183,17 @@ public class TransportConfiguration implements Serializable {
    /**
     * {@return any parameters set for this TransportConfiguration}
     */
+   @ConfigProperty
    public Map<String, Object> getParams() {
       return params;
    }
 
+   @ConfigProperty
    public Map<String, Object> getExtraParams() {
       return extraProps;
    }
 
+   @ConfigProperty
    public Map<String, Object> getCombinedParams() {
       Map<String, Object> combined = new HashMap<>();
       if (params != null) {
@@ -417,6 +423,7 @@ public class TransportConfiguration implements Serializable {
       }
    }
 
+   @ConfigProperty
    public String getLockCoordinator() {
       return lockCoordinator;
    }

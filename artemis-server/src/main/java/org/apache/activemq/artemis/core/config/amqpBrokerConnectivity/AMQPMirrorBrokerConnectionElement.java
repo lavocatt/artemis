@@ -19,6 +19,7 @@ package org.apache.activemq.artemis.core.config.amqpBrokerConnectivity;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.core.SimpleString;
 
@@ -42,6 +43,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
 
    private Map<String, Object> properties = new HashMap<>();
 
+   @ConfigProperty
    public SimpleString getMirrorSNF() {
       return mirrorSNF;
    }
@@ -59,6 +61,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
     * There is no setter for this property. Basically by setting a sourceMirrorAddress we are automatically setting this
     * to true.
     */
+   @ConfigProperty
    public boolean isDurable() {
       return durable;
    }
@@ -68,6 +71,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
       return this;
    }
 
+   @ConfigProperty
    public boolean isQueueCreation() {
       return queueCreation;
    }
@@ -77,6 +81,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
       return this;
    }
 
+   @ConfigProperty
    public boolean isQueueRemoval() {
       return queueRemoval;
    }
@@ -92,6 +97,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
       return this;
    }
 
+   @ConfigProperty
    public boolean isMessageAcknowledgements() {
       return messageAcknowledgements;
    }
@@ -101,6 +107,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
       return this;
    }
 
+   @ConfigProperty
    public String getAddressFilter() {
       return addressFilter;
    }
@@ -110,6 +117,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
       return this;
    }
 
+   @ConfigProperty
    public boolean isSync() {
       return sync;
    }
@@ -146,6 +154,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
    /**
     * @return the collection of configuration properties associated with this mirror configuration element
     */
+   @ConfigProperty
    public Map<String, Object> getProperties() {
       return properties;
    }

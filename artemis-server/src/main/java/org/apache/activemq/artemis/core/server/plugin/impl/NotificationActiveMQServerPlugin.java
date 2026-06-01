@@ -32,11 +32,18 @@ import org.apache.activemq.artemis.core.server.management.Notification;
 import org.apache.activemq.artemis.core.server.plugin.ActiveMQServerPlugin;
 import org.apache.activemq.artemis.spi.core.protocol.RemotingConnection;
 import org.apache.activemq.artemis.utils.CertificateUtil;
+import org.apache.activemq.artemis.api.config.annotation.InitKeys;
 import org.apache.activemq.artemis.utils.collections.TypedProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 
+@InitKeys({
+   @InitKeys.Key(name = "SEND_CONNECTION_NOTIFICATIONS", type = "boolean"),
+   @InitKeys.Key(name = "SEND_ADDRESS_NOTIFICATIONS", type = "boolean"),
+   @InitKeys.Key(name = "SEND_DELIVERED_NOTIFICATIONS", type = "boolean"),
+   @InitKeys.Key(name = "SEND_EXPIRED_NOTIFICATIONS", type = "boolean")
+})
 public class NotificationActiveMQServerPlugin implements ActiveMQServerPlugin {
 
    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());

@@ -27,8 +27,12 @@ import org.apache.activemq.artemis.spi.core.remoting.Acceptor;
 import org.apache.activemq.artemis.spi.core.remoting.AcceptorFactory;
 import org.apache.activemq.artemis.spi.core.remoting.BufferHandler;
 import org.apache.activemq.artemis.spi.core.remoting.ServerConnectionLifeCycleListener;
+import org.apache.activemq.artemis.api.config.annotation.FactoryParams;
+import org.apache.activemq.artemis.api.config.annotation.FactoryType;
 import org.apache.activemq.artemis.utils.actors.OrderedExecutor;
 
+@FactoryType(FactoryType.Kind.ACCEPTOR)
+@FactoryParams(constantsClass = org.apache.activemq.artemis.core.remoting.impl.netty.TransportConstants.class)
 public class NettyAcceptorFactory implements AcceptorFactory {
 
    @Override

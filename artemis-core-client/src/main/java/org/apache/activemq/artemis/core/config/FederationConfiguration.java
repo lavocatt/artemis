@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigMap;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.core.ActiveMQBuffer;
 import org.apache.activemq.artemis.core.config.federation.FederationAddressPolicyConfiguration;
@@ -46,6 +48,8 @@ public class FederationConfiguration implements Serializable {
 
    private Map<String, FederationTransformerConfiguration> transformerConfigurationMap = new HashMap<>();
 
+   @ConfigProperty
+   @ConfigMap
    public List<FederationUpstreamConfiguration> getUpstreamConfigurations() {
       return upstreamConfigurations;
    }
@@ -55,6 +59,8 @@ public class FederationConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
+   @ConfigMap
    public List<FederationDownstreamConfiguration> getDownstreamConfigurations() {
       return downstreamConfigurations;
    }
@@ -69,6 +75,7 @@ public class FederationConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Map<String, FederationPolicy> getQueuePolicies() {
       return federationPolicyMap;
    }
@@ -78,6 +85,7 @@ public class FederationConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Map<String, FederationPolicy> getAddressPolicies() {
       return federationPolicyMap;
    }
@@ -87,6 +95,7 @@ public class FederationConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Map<String, FederationPolicy> getPolicySets() {
       return federationPolicyMap;
    }
@@ -104,6 +113,7 @@ public class FederationConfiguration implements Serializable {
       this.upstreamConfigurations.clear();
    }
 
+   @ConfigProperty
    public Map<String, FederationPolicy> getFederationPolicyMap() {
       return federationPolicyMap;
    }
@@ -113,14 +123,17 @@ public class FederationConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Map<String, FederationTransformerConfiguration> getTransformerConfigurationMap() {
       return transformerConfigurationMap;
    }
 
+   @ConfigProperty
    public Map<String, FederationTransformerConfiguration> getTransformerConfigurations() {
       return transformerConfigurationMap;
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -130,6 +143,7 @@ public class FederationConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Credentials getCredentials() {
       return credentials;
    }
@@ -145,6 +159,7 @@ public class FederationConfiguration implements Serializable {
 
       private String password;
 
+      @ConfigProperty
       public String getUser() {
          return user;
       }
@@ -154,6 +169,7 @@ public class FederationConfiguration implements Serializable {
          return this;
       }
 
+      @ConfigProperty
       public String getPassword() {
          return password;
       }

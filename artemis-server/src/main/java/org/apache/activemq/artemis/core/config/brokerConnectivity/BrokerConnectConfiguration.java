@@ -19,6 +19,8 @@ package org.apache.activemq.artemis.core.config.brokerConnectivity;
 import java.io.Serializable;
 import java.util.Objects;
 
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
+
 /**
  * This is base class for outgoing broker configuration types.
  * <p>
@@ -43,6 +45,7 @@ public abstract class BrokerConnectConfiguration implements Serializable {
       this.uri = uri;
    }
 
+   @ConfigProperty
    public String getLockCoordinator() {
       return lockCoordinator;
    }
@@ -54,6 +57,7 @@ public abstract class BrokerConnectConfiguration implements Serializable {
 
    public abstract void parseURI() throws Exception;
 
+   @ConfigProperty
    public int getReconnectAttempts() {
       return reconnectAttempts;
    }
@@ -63,6 +67,7 @@ public abstract class BrokerConnectConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getUser() {
       return user;
    }
@@ -72,6 +77,7 @@ public abstract class BrokerConnectConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getPassword() {
       return password;
    }
@@ -81,6 +87,7 @@ public abstract class BrokerConnectConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getRetryInterval() {
       return retryInterval;
    }
@@ -90,6 +97,7 @@ public abstract class BrokerConnectConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getUri() {
       return uri;
    }
@@ -99,6 +107,7 @@ public abstract class BrokerConnectConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -108,6 +117,7 @@ public abstract class BrokerConnectConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isAutostart() {
       return autostart;
    }

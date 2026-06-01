@@ -21,6 +21,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigMap;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 public class JaasAppConfiguration implements Serializable {
 
@@ -33,6 +35,7 @@ public class JaasAppConfiguration implements Serializable {
    public JaasAppConfiguration() {
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -42,6 +45,8 @@ public class JaasAppConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
+   @ConfigMap
    public List<JaasAppConfigurationEntry> getModules() {
       return modules;
    }

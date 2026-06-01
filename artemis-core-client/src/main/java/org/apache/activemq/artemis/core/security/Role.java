@@ -19,6 +19,7 @@ package org.apache.activemq.artemis.core.security;
 import org.apache.activemq.artemis.json.JsonObject;
 import java.io.Serializable;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.utils.JsonLoader;
 
@@ -171,54 +172,67 @@ public class Role implements Serializable {
       this.edit = edit;
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
 
+   @ConfigProperty
    public boolean isSend() {
       return send;
    }
 
+   @ConfigProperty
    public boolean isConsume() {
       return consume;
    }
 
+   @ConfigProperty
    public boolean isCreateAddress() {
       return createAddress;
    }
 
+   @ConfigProperty
    public boolean isDeleteAddress() {
       return deleteAddress;
    }
 
+   @ConfigProperty
    public boolean isCreateDurableQueue() {
       return createDurableQueue;
    }
 
+   @ConfigProperty
    public boolean isDeleteDurableQueue() {
       return deleteDurableQueue;
    }
 
+   @ConfigProperty
    public boolean isCreateNonDurableQueue() {
       return createNonDurableQueue;
    }
 
+   @ConfigProperty
    public boolean isDeleteNonDurableQueue() {
       return deleteNonDurableQueue;
    }
 
+   @ConfigProperty
    public boolean isManage() {
       return manage;
    }
 
+   @ConfigProperty
    public boolean isBrowse() {
       return browse;
    }
 
+   @ConfigProperty
    public boolean isEdit() {
       return edit;
    }
 
+   @ConfigProperty
    public boolean isView() {
       return view;
    }

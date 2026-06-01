@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.core.ActiveMQBuffer;
 
@@ -32,6 +33,7 @@ public abstract class FederationStreamConfiguration<T extends FederationStreamCo
    private FederationConnectionConfiguration connectionConfiguration = new FederationConnectionConfiguration();
    private Set<String> policyRefs = new HashSet<>();
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -41,6 +43,7 @@ public abstract class FederationStreamConfiguration<T extends FederationStreamCo
       return (T) this;
    }
 
+   @ConfigProperty
    public Set<String> getPolicyRefs() {
       return policyRefs;
    }
@@ -62,6 +65,7 @@ public abstract class FederationStreamConfiguration<T extends FederationStreamCo
       return (T) this;
    }
 
+   @ConfigProperty
    public FederationConnectionConfiguration getConnectionConfiguration() {
       return connectionConfiguration;
    }

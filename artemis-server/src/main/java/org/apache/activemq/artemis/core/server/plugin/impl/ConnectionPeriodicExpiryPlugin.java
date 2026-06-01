@@ -31,10 +31,17 @@ import org.apache.activemq.artemis.core.server.ActiveMQServer;
 import org.apache.activemq.artemis.core.server.plugin.ActiveMQServerBasePlugin;
 import org.apache.activemq.artemis.spi.core.protocol.RemotingConnection;
 import org.apache.activemq.artemis.spi.core.remoting.Acceptor;
+import org.apache.activemq.artemis.api.config.annotation.InitKeys;
 import org.apache.activemq.artemis.utils.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@InitKeys({
+   @InitKeys.Key(name = "name"),
+   @InitKeys.Key(name = "periodSeconds", type = "integer"),
+   @InitKeys.Key(name = "accuracyWindowSeconds", type = "integer"),
+   @InitKeys.Key(name = "acceptorMatchRegex")
+})
 public class ConnectionPeriodicExpiryPlugin implements ActiveMQServerBasePlugin {
 
    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());

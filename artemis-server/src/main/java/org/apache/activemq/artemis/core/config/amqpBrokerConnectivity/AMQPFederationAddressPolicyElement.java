@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
+import org.apache.activemq.artemis.api.config.annotation.MapKeys;
 
 import org.apache.activemq.artemis.core.config.TransformerConfiguration;
 
@@ -42,6 +44,7 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
    private Boolean allowWildcardGroupings;
    private TransformerConfiguration transformerConfig;
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -51,6 +54,7 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Set<AddressMatch> getIncludes() {
       return includes;
    }
@@ -74,6 +78,7 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Set<AddressMatch> getExcludes() {
       return excludes;
    }
@@ -97,6 +102,8 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
       return this;
    }
 
+   @MapKeys(constantsClass = "org.apache.activemq.artemis.protocol.amqp.connect.federation.AMQPFederationConstants")
+   @ConfigProperty
    public Map<String, Object> getProperties() {
       return properties;
    }
@@ -120,6 +127,7 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getMaxHops() {
       return maxHops;
    }
@@ -129,6 +137,7 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Long getAutoDeleteMessageCount() {
       return autoDeleteMessageCount;
    }
@@ -138,6 +147,7 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Long getAutoDeleteDelay() {
       return autoDeleteDelay;
    }
@@ -147,6 +157,7 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Boolean getAutoDelete() {
       return autoDelete;
    }
@@ -156,6 +167,7 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Boolean isEnableDivertBindings() {
       return enableDivertBindings;
    }
@@ -170,10 +182,12 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public TransformerConfiguration getTransformerConfiguration() {
       return transformerConfig;
    }
 
+   @ConfigProperty
    public Boolean isAllowWildcardGroupings() {
       return allowWildcardGroupings;
    }
@@ -224,6 +238,7 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
       private String name;
       private String addressMatch;
 
+      @ConfigProperty
       public String getName() {
          if (name == null) {
             return addressMatch;
@@ -236,6 +251,7 @@ public final class AMQPFederationAddressPolicyElement implements Serializable {
          return this;
       }
 
+      @ConfigProperty
       public String getAddressMatch() {
          return addressMatch;
       }

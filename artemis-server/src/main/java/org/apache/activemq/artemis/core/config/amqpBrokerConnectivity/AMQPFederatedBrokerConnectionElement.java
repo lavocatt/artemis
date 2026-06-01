@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 /**
  * Configuration for broker federation that is managed over an AMQP broker connection.
@@ -59,6 +60,7 @@ public class AMQPFederatedBrokerConnectionElement extends AMQPBrokerConnectionEl
    /**
     * @return the configured remote address policy set
     */
+   @ConfigProperty
    public Set<AMQPFederationAddressPolicyElement> getRemoteAddressPolicies() {
       return remoteAddressPolicies;
    }
@@ -75,6 +77,7 @@ public class AMQPFederatedBrokerConnectionElement extends AMQPBrokerConnectionEl
    /**
     * @return the configured remote queue policy set
     */
+   @ConfigProperty
    public Set<AMQPFederationQueuePolicyElement> getRemoteQueuePolicies() {
       return remoteQueuePolicies;
    }
@@ -91,6 +94,7 @@ public class AMQPFederatedBrokerConnectionElement extends AMQPBrokerConnectionEl
    /**
     * @return the configured local address policy set
     */
+   @ConfigProperty
    public Set<AMQPFederationAddressPolicyElement> getLocalAddressPolicies() {
       return localAddressPolicies;
    }
@@ -107,6 +111,7 @@ public class AMQPFederatedBrokerConnectionElement extends AMQPBrokerConnectionEl
    /**
     * @return the configured local queue policy set
     */
+   @ConfigProperty
    public Set<AMQPFederationQueuePolicyElement> getLocalQueuePolicies() {
       return localQueuePolicies;
    }
@@ -147,6 +152,7 @@ public class AMQPFederatedBrokerConnectionElement extends AMQPBrokerConnectionEl
    /**
     * @return the collection of configuration properties associated with this federation element
     */
+   @ConfigProperty
    public Map<String, Object> getProperties() {
       return properties;
    }

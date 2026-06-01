@@ -18,11 +18,21 @@ package org.apache.activemq.artemis.core.config.amqpBrokerConnectivity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
+import org.apache.activemq.artemis.api.config.annotation.Discriminator;
 
 import org.apache.activemq.artemis.api.core.SimpleString;
 import org.apache.activemq.artemis.core.config.WildcardConfiguration;
 import org.apache.activemq.artemis.core.postoffice.impl.AddressImpl;
 
+@Discriminator(field = "type", value = {
+   @Discriminator.Mapping(subtype = AMQPBridgeBrokerConnectionElement.class, name = "BRIDGE"),
+   @Discriminator.Mapping(subtype = AMQPFederatedBrokerConnectionElement.class, name = "FEDERATION"),
+   @Discriminator.Mapping(subtype = AMQPMirrorBrokerConnectionElement.class, name = "MIRROR"),
+   @Discriminator.Mapping(subtype = AMQPPeerBrokerConnectionElement.class, name = "PEER"),
+   @Discriminator.Mapping(subtype = AMQPReceiverBrokerConnectionElement.class, name = "RECEIVER"),
+   @Discriminator.Mapping(subtype = AMQPSenderBrokerConnectionElement.class, name = "SENDER")
+})
 public class AMQPBrokerConnectionElement implements Serializable {
 
    private static final long serialVersionUID = 3653295602796835937L;
@@ -36,6 +46,7 @@ public class AMQPBrokerConnectionElement implements Serializable {
    public AMQPBrokerConnectionElement() {
    }
 
+   @ConfigProperty
    public AMQPBrokerConnectConfiguration getParent() {
       return parent;
    }
@@ -45,6 +56,7 @@ public class AMQPBrokerConnectionElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getQueueName() {
       return queueName;
    }
@@ -58,6 +70,7 @@ public class AMQPBrokerConnectionElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getMatchAddress() {
       return matchAddress;
    }
@@ -81,6 +94,7 @@ public class AMQPBrokerConnectionElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public AMQPBrokerConnectionAddressType getType() {
       return type;
    }
@@ -90,6 +104,7 @@ public class AMQPBrokerConnectionElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }

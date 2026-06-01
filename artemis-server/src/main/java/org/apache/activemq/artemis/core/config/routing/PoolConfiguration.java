@@ -19,6 +19,7 @@ package org.apache.activemq.artemis.core.config.routing;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 public class PoolConfiguration implements Serializable {
 
@@ -40,6 +41,7 @@ public class PoolConfiguration implements Serializable {
 
    private int quorumTimeout = 3000;
 
+   @ConfigProperty
    public String getUsername() {
       return username;
    }
@@ -49,6 +51,7 @@ public class PoolConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getPassword() {
       return password;
    }
@@ -58,6 +61,7 @@ public class PoolConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getCheckPeriod() {
       return checkPeriod;
    }
@@ -67,6 +71,7 @@ public class PoolConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getQuorumSize() {
       return quorumSize;
    }
@@ -76,6 +81,7 @@ public class PoolConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getQuorumTimeout() {
       return quorumTimeout;
    }
@@ -85,6 +91,7 @@ public class PoolConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isLocalTargetEnabled() {
       return localTargetEnabled;
    }
@@ -94,6 +101,7 @@ public class PoolConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getClusterConnection() {
       return clusterConnection;
    }
@@ -103,6 +111,7 @@ public class PoolConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public List<String> getStaticConnectors() {
       return staticConnectors;
    }
@@ -112,6 +121,7 @@ public class PoolConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getDiscoveryGroupName() {
       return discoveryGroupName;
    }

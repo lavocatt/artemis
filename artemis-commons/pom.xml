@@ -34,6 +34,12 @@
 
    <dependencies>
 
+      <dependency>
+         <groupId>org.apache.artemis</groupId>
+         <artifactId>artemis-config-api</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+
       <!-- Johnzon and JSON is meant to be referenced only here on this package (commons)
            and we should not leak any dependencies to JSON or Johnzon in any of our packages.
            Any other references would be meant for tests. -->

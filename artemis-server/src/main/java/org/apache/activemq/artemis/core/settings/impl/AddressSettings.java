@@ -20,6 +20,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.apache.activemq.artemis.api.config.ActiveMQDefaultConfiguration;
+import org.apache.activemq.artemis.api.config.annotation.ByteNotation;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 import org.apache.activemq.artemis.api.core.ActiveMQBuffer;
 import org.apache.activemq.artemis.api.core.RoutingType;
 import org.apache.activemq.artemis.api.core.SimpleString;
@@ -612,6 +614,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public Boolean isAutoCreateQueues() {
       return Objects.requireNonNullElse(autoCreateQueues, AddressSettings.DEFAULT_AUTO_CREATE_QUEUES);
    }
@@ -621,6 +624,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public Boolean isAutoDeleteQueues() {
       return Objects.requireNonNullElse(autoDeleteQueues, AddressSettings.DEFAULT_AUTO_DELETE_QUEUES);
    }
@@ -635,11 +639,14 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public Boolean isAutoDeleteCreatedQueues() {
       return Objects.requireNonNullElse(autoDeleteCreatedQueues, AddressSettings.DEFAULT_AUTO_DELETE_CREATED_QUEUES);
    }
 
 
+   @ByteNotation
+   @ConfigProperty
    public long getAutoDeleteQueuesDelay() {
       return Objects.requireNonNullElse(autoDeleteQueuesDelay, AddressSettings.DEFAULT_AUTO_DELETE_QUEUES_DELAY);
    }
@@ -649,6 +656,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public boolean getAutoDeleteQueuesSkipUsageCheck() {
       return Objects.requireNonNullElse(autoDeleteQueuesSkipUsageCheck, AddressSettings.DEFAULT_AUTO_DELETE_QUEUES_SKIP_USAGE_CHECK);
    }
@@ -658,6 +666,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getAutoDeleteQueuesMessageCount() {
       return Objects.requireNonNullElse(autoDeleteQueuesMessageCount, AddressSettings.DEFAULT_AUTO_DELETE_QUEUES_MESSAGE_COUNT);
    }
@@ -667,6 +677,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public DeletionPolicy getConfigDeleteQueues() {
       return Objects.requireNonNullElse(configDeleteQueues, AddressSettings.DEFAULT_CONFIG_DELETE_QUEUES);
    }
@@ -676,6 +687,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public Boolean isAutoCreateAddresses() {
       return Objects.requireNonNullElse(autoCreateAddresses, AddressSettings.DEFAULT_AUTO_CREATE_ADDRESSES);
    }
@@ -685,6 +697,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public Boolean isAutoDeleteAddresses() {
       return Objects.requireNonNullElse(autoDeleteAddresses, AddressSettings.DEFAULT_AUTO_DELETE_ADDRESSES);
    }
@@ -694,6 +707,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getAutoDeleteAddressesDelay() {
       return Objects.requireNonNullElse(autoDeleteAddressesDelay, AddressSettings.DEFAULT_AUTO_DELETE_ADDRESSES_DELAY);
    }
@@ -703,6 +718,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public boolean isAutoDeleteAddressesSkipUsageCheck() {
       return Objects.requireNonNullElse(autoDeleteAddressesSkipUsageCheck, AddressSettings.DEFAULT_AUTO_DELETE_ADDRESSES_SKIP_USAGE_CHECK);
    }
@@ -712,6 +728,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public DeletionPolicy getConfigDeleteAddresses() {
       return Objects.requireNonNullElse(configDeleteAddresses, AddressSettings.DEFAULT_CONFIG_DELETE_ADDRESSES);
    }
@@ -726,10 +743,12 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public DeletionPolicy getConfigDeleteDiverts() {
       return Objects.requireNonNullElse(configDeleteDiverts, AddressSettings.DEFAULT_CONFIG_DELETE_DIVERTS);
    }
 
+   @ConfigProperty
    public Integer getDefaultMaxConsumers() {
       return Objects.requireNonNullElse(defaultMaxConsumers, ActiveMQDefaultConfiguration.getDefaultMaxQueueConsumers());
    }
@@ -739,6 +758,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public Integer getDefaultConsumersBeforeDispatch() {
       return Objects.requireNonNullElse(defaultConsumersBeforeDispatch, ActiveMQDefaultConfiguration.getDefaultConsumersBeforeDispatch());
    }
@@ -748,6 +768,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public Long getDefaultDelayBeforeDispatch() {
       return Objects.requireNonNullElse(defaultDelayBeforeDispatch, ActiveMQDefaultConfiguration.getDefaultDelayBeforeDispatch());
    }
@@ -757,6 +779,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public Boolean isDefaultPurgeOnNoConsumers() {
       return Objects.requireNonNullElse(defaultPurgeOnNoConsumers, ActiveMQDefaultConfiguration.getDefaultPurgeOnNoConsumers());
    }
@@ -766,6 +789,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public RoutingType getDefaultQueueRoutingType() {
       return Objects.requireNonNullElse(defaultQueueRoutingType, ActiveMQDefaultConfiguration.getDefaultRoutingType());
    }
@@ -775,6 +799,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public RoutingType getDefaultAddressRoutingType() {
       return Objects.requireNonNullElse(defaultAddressRoutingType, ActiveMQDefaultConfiguration.getDefaultRoutingType());
    }
@@ -784,6 +809,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public boolean isDefaultLastValueQueue() {
       return Objects.requireNonNullElse(defaultLastValueQueue, AddressSettings.DEFAULT_LAST_VALUE_QUEUE);
    }
@@ -793,6 +819,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getDefaultLastValueKey() {
       return defaultLastValueKey != null ? defaultLastValueKey : ActiveMQDefaultConfiguration.getDefaultLastValueKey();
    }
@@ -802,6 +829,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public boolean isDefaultNonDestructive() {
       return Objects.requireNonNullElse(defaultNonDestructive, ActiveMQDefaultConfiguration.getDefaultNonDestructive());
    }
@@ -811,6 +839,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public Boolean isDefaultExclusiveQueue() {
       return Objects.requireNonNullElse(defaultExclusiveQueue, ActiveMQDefaultConfiguration.getDefaultExclusive());
    }
@@ -820,6 +849,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public AddressFullMessagePolicy getAddressFullMessagePolicy() {
       return Objects.requireNonNullElse(addressFullMessagePolicy, AddressSettings.DEFAULT_ADDRESS_FULL_MESSAGE_POLICY);
    }
@@ -829,6 +859,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public int getPageSizeBytes() {
       return Objects.requireNonNullElse(pageSizeBytes, AddressSettings.DEFAULT_PAGE_SIZE);
    }
@@ -838,6 +869,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public int getPageCacheMaxSize() {
       return Objects.requireNonNullElse(pageCacheMaxSize, AddressSettings.DEFAULT_PAGE_MAX_CACHE);
    }
@@ -847,10 +879,14 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getMaxSizeBytes() {
       return Objects.requireNonNullElse(maxSizeBytes, AddressSettings.DEFAULT_MAX_SIZE_BYTES);
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getMaxSizeMessages() {
       return Objects.requireNonNullElse(maxSizeMessages, AddressSettings.DEFAULT_MAX_SIZE_MESSAGES);
    }
@@ -869,6 +905,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public int getMaxReadPageMessages() {
       return Objects.requireNonNullElse(maxReadPageMessages, AddressSettings.DEFAULT_MAX_READ_PAGE_MESSAGES);
    }
@@ -879,6 +916,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
    }
 
 
+   @ConfigProperty
    public int getPrefetchPageMessages() {
       return Objects.requireNonNullElse(prefetchPageMessages, getMaxReadPageMessages());
    }
@@ -888,6 +926,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public Long getPageLimitBytes() {
       return pageLimitBytes;
    }
@@ -897,6 +937,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public Long getPageLimitMessages() {
       return pageLimitMessages;
    }
@@ -906,6 +948,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public PageFullMessagePolicy getPageFullMessagePolicy() {
       return this.pageFullMessagePolicy;
    }
@@ -915,6 +958,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public DiskFullMessagePolicy getDiskFullMessagePolicy() {
       return diskFullMessagePolicy;
    }
@@ -924,6 +968,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public int getMaxReadPageBytes() {
       return Objects.requireNonNullElse(maxReadPageBytes, 2 * getPageSizeBytes());
    }
@@ -933,6 +978,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public int getPrefetchPageBytes() {
       return Objects.requireNonNullElse(prefetchPageBytes, getMaxReadPageBytes());
    }
@@ -942,6 +988,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public int getMaxDeliveryAttempts() {
       return Objects.requireNonNullElse(maxDeliveryAttempts, AddressSettings.DEFAULT_MAX_DELIVERY_ATTEMPTS);
    }
@@ -951,6 +998,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public int getMessageCounterHistoryDayLimit() {
       return Objects.requireNonNullElse(messageCounterHistoryDayLimit, AddressSettings.DEFAULT_MESSAGE_COUNTER_HISTORY_DAY_LIMIT);
    }
@@ -960,6 +1008,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getRedeliveryDelay() {
       return Objects.requireNonNullElse(redeliveryDelay, AddressSettings.DEFAULT_REDELIVER_DELAY);
    }
@@ -969,6 +1019,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public double getRedeliveryMultiplier() {
       return Objects.requireNonNullElse(redeliveryMultiplier, AddressSettings.DEFAULT_REDELIVER_MULTIPLIER);
    }
@@ -978,6 +1029,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public double getRedeliveryCollisionAvoidanceFactor() {
       return Objects.requireNonNullElse(redeliveryCollisionAvoidanceFactor, AddressSettings.DEFAULT_REDELIVER_COLLISION_AVOIDANCE_FACTOR);
    }
@@ -987,6 +1039,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getMaxRedeliveryDelay() {
       return Objects.requireNonNullElse(maxRedeliveryDelay, (getRedeliveryDelay() * 10));
    }
@@ -996,6 +1050,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getDeadLetterAddress() {
       return deadLetterAddress;
    }
@@ -1005,6 +1060,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getExpiryAddress() {
       return expiryAddress;
    }
@@ -1014,6 +1070,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public boolean isAutoCreateExpiryResources() {
       return Objects.requireNonNullElse(autoCreateExpiryResources, AddressSettings.DEFAULT_AUTO_CREATE_EXPIRY_RESOURCES);
    }
@@ -1023,6 +1080,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getExpiryQueuePrefix() {
       return Objects.requireNonNullElse(expiryQueuePrefix, AddressSettings.DEFAULT_EXPIRY_QUEUE_PREFIX);
    }
@@ -1032,6 +1090,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getExpiryQueueSuffix() {
       return Objects.requireNonNullElse(expiryQueueSuffix, AddressSettings.DEFAULT_EXPIRY_QUEUE_SUFFIX);
    }
@@ -1041,6 +1100,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public Long getExpiryDelay() {
       return Objects.requireNonNullElse(expiryDelay, AddressSettings.DEFAULT_EXPIRY_DELAY);
    }
@@ -1050,6 +1111,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public Long getMinExpiryDelay() {
       return Objects.requireNonNullElse(minExpiryDelay, AddressSettings.DEFAULT_MIN_EXPIRY_DELAY);
    }
@@ -1059,6 +1122,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public Long getMaxExpiryDelay() {
       return Objects.requireNonNullElse(maxExpiryDelay, AddressSettings.DEFAULT_MAX_EXPIRY_DELAY);
    }
@@ -1068,6 +1133,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public Boolean isNoExpiry() {
       return Objects.requireNonNullElse(noExpiry, AddressSettings.DEFAULT_NO_EXPIRY);
    }
@@ -1077,6 +1143,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public boolean isSendToDLAOnNoRoute() {
       return Objects.requireNonNullElse(sendToDLAOnNoRoute, AddressSettings.DEFAULT_SEND_TO_DLA_ON_NO_ROUTE);
    }
@@ -1086,6 +1153,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public boolean isAutoCreateDeadLetterResources() {
       return Objects.requireNonNullElse(autoCreateDeadLetterResources, AddressSettings.DEFAULT_AUTO_CREATE_DEAD_LETTER_RESOURCES);
    }
@@ -1095,6 +1163,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getDeadLetterQueuePrefix() {
       return Objects.requireNonNullElse(deadLetterQueuePrefix, AddressSettings.DEFAULT_DEAD_LETTER_QUEUE_PREFIX);
    }
@@ -1104,6 +1173,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getDeadLetterQueueSuffix() {
       return Objects.requireNonNullElse(deadLetterQueueSuffix, AddressSettings.DEFAULT_DEAD_LETTER_QUEUE_SUFFIX);
    }
@@ -1113,6 +1183,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getRedistributionDelay() {
       return Objects.requireNonNullElse(redistributionDelay, AddressSettings.DEFAULT_REDISTRIBUTION_DELAY);
    }
@@ -1122,6 +1194,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getSlowConsumerThreshold() {
       return Objects.requireNonNullElse(slowConsumerThreshold, AddressSettings.DEFAULT_SLOW_CONSUMER_THRESHOLD);
    }
@@ -1131,6 +1205,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public SlowConsumerThresholdMeasurementUnit getSlowConsumerThresholdMeasurementUnit() {
       return Objects.requireNonNullElse(slowConsumerThresholdMeasurementUnit, AddressSettings.DEFAULT_SLOW_CONSUMER_THRESHOLD_MEASUREMENT_UNIT);
    }
@@ -1140,6 +1215,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getSlowConsumerCheckPeriod() {
       return Objects.requireNonNullElse(slowConsumerCheckPeriod, AddressSettings.DEFAULT_SLOW_CONSUMER_CHECK_PERIOD);
    }
@@ -1149,6 +1226,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public SlowConsumerPolicy getSlowConsumerPolicy() {
       return Objects.requireNonNullElse(slowConsumerPolicy, AddressSettings.DEFAULT_SLOW_CONSUMER_POLICY);
    }
@@ -1158,6 +1236,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public int getManagementBrowsePageSize() {
       return Objects.requireNonNullElse(managementBrowsePageSize, AddressSettings.MANAGEMENT_BROWSE_PAGE_SIZE);
    }
@@ -1178,6 +1257,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getMaxSizeBytesRejectThreshold() {
       return (maxSizeBytesRejectThreshold == null) ? AddressSettings.DEFAULT_ADDRESS_REJECT_THRESHOLD : maxSizeBytesRejectThreshold;
    }
@@ -1187,6 +1268,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public int getDefaultConsumerWindowSize() {
       return Objects.requireNonNullElse(defaultConsumerWindowSize, ActiveMQClient.DEFAULT_CONSUMER_WINDOW_SIZE);
    }
@@ -1196,6 +1278,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public boolean isDefaultGroupRebalance() {
       return Objects.requireNonNullElse(defaultGroupRebalance, ActiveMQDefaultConfiguration.getDefaultGroupRebalance());
    }
@@ -1205,6 +1288,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public boolean isDefaultGroupRebalancePauseDispatch() {
       return Objects.requireNonNullElse(defaultGroupRebalancePauseDispatch, ActiveMQDefaultConfiguration.getDefaultGroupRebalancePauseDispatch());
    }
@@ -1214,10 +1298,12 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public int getDefaultGroupBuckets() {
       return Objects.requireNonNullElse(defaultGroupBuckets, ActiveMQDefaultConfiguration.getDefaultGroupBuckets());
    }
 
+   @ConfigProperty
    public SimpleString getDefaultGroupFirstKey() {
       return defaultGroupFirstKey != null ? defaultGroupFirstKey : ActiveMQDefaultConfiguration.getDefaultGroupFirstKey();
    }
@@ -1232,6 +1318,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getDefaultRingSize() {
       return Objects.requireNonNullElse(defaultRingSize, ActiveMQDefaultConfiguration.DEFAULT_RING_SIZE);
    }
@@ -1241,6 +1329,8 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    public long getRetroactiveMessageCount() {
       return Objects.requireNonNullElse(retroactiveMessageCount, ActiveMQDefaultConfiguration.DEFAULT_RETROACTIVE_MESSAGE_COUNT);
    }
@@ -1250,6 +1340,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public boolean isEnableMetrics() {
       return Objects.requireNonNullElse(enableMetrics, AddressSettings.DEFAULT_ENABLE_METRICS);
    }
@@ -1259,6 +1350,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public int getManagementMessageAttributeSizeLimit() {
       return Objects.requireNonNullElse(managementMessageAttributeSizeLimit, AddressSettings.MANAGEMENT_MESSAGE_ATTRIBUTE_SIZE_LIMIT);
    }
@@ -1268,6 +1360,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public boolean isEnableIngressTimestamp() {
       return Objects.requireNonNullElse(enableIngressTimestamp, AddressSettings.DEFAULT_ENABLE_INGRESS_TIMESTAMP);
    }
@@ -1277,6 +1370,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public Integer getIDCacheSize() {
       return idCacheSize;
    }
@@ -1286,6 +1380,7 @@ public class AddressSettings implements Mergeable<AddressSettings>, Serializable
       return this;
    }
 
+   @ConfigProperty
    public Integer getInitialQueueBufferSize() {
       return initialQueueBufferSize;
    }

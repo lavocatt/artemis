@@ -42,6 +42,7 @@
       <module>artemis-jakarta-cdi-client</module>
       <module>artemis-boot</module>
       <module>artemis-cli</module>
+      <module>artemis-config-api</module>
       <module>artemis-commons</module>
       <module>artemis-selector</module>
       <module>artemis-core-client</module>
@@ -58,6 +59,7 @@
       <module>artemis-jakarta-client-osgi</module>
       <module>artemis-jms-server</module>
       <module>artemis-jakarta-server</module>
+      <module>artemis-jsonschema</module>
       <module>artemis-journal</module>
       <module>artemis-ra</module>
       <module>artemis-jakarta-ra</module>

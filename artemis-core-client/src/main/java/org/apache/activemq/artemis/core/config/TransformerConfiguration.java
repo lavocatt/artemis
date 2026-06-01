@@ -18,6 +18,7 @@ package org.apache.activemq.artemis.core.config;
 
 import org.apache.activemq.artemis.json.JsonObjectBuilder;
 import org.apache.activemq.artemis.utils.JsonLoader;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.json.JsonObject;
 import org.apache.activemq.artemis.json.JsonString;
@@ -49,10 +50,12 @@ public final class TransformerConfiguration implements Serializable {
       this.className = className;
    }
 
+   @ConfigProperty
    public String getClassName() {
       return className;
    }
 
+   @ConfigProperty
    public Map<String, String> getProperties() {
       return properties;
    }

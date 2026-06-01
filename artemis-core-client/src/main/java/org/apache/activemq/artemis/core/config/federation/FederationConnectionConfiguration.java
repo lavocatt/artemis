@@ -19,6 +19,7 @@ package org.apache.activemq.artemis.core.config.federation;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.config.ActiveMQDefaultConfiguration;
 import org.apache.activemq.artemis.api.core.ActiveMQBuffer;
@@ -47,6 +48,7 @@ public class FederationConnectionConfiguration implements Serializable {
    private long callTimeout = ActiveMQDefaultConfiguration.getDefaultFederationCallTimeout();
    private long callFailoverTimeout = ActiveMQDefaultConfiguration.getDefaultFederationCallFailoverTimeout();
 
+   @ConfigProperty
    public String getDiscoveryGroupName() {
       return discoveryGroupName;
    }
@@ -56,6 +58,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public List<String> getStaticConnectors() {
       return staticConnectors;
    }
@@ -65,6 +68,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isHA() {
       return isHA;
    }
@@ -74,6 +78,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getCircuitBreakerTimeout() {
       return circuitBreakerTimeout;
    }
@@ -83,6 +88,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getUsername() {
       return username;
    }
@@ -92,6 +98,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getPassword() {
       return password;
    }
@@ -101,6 +108,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getPriorityAdjustment() {
       return priorityAdjustment;
    }
@@ -110,6 +118,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isShareConnection() {
       return shareConnection;
    }
@@ -119,6 +128,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getClientFailureCheckPeriod() {
       return clientFailureCheckPeriod;
    }
@@ -128,6 +138,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getConnectionTTL() {
       return connectionTTL;
    }
@@ -137,6 +148,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getRetryInterval() {
       return retryInterval;
    }
@@ -146,6 +158,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public double getRetryIntervalMultiplier() {
       return retryIntervalMultiplier;
    }
@@ -155,6 +168,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getMaxRetryInterval() {
       return maxRetryInterval;
    }
@@ -164,6 +178,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getInitialConnectAttempts() {
       return initialConnectAttempts;
    }
@@ -173,6 +188,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getReconnectAttempts() {
       return reconnectAttempts;
    }
@@ -182,6 +198,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getCallTimeout() {
       return callTimeout;
    }
@@ -191,6 +208,7 @@ public class FederationConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getCallFailoverTimeout() {
       return callFailoverTimeout;
    }

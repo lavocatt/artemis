@@ -19,6 +19,7 @@ package org.apache.activemq.artemis.api.core;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.config.ActiveMQDefaultConfiguration;
 
@@ -41,14 +42,17 @@ public final class BroadcastGroupConfiguration implements Serializable {
    public BroadcastGroupConfiguration() {
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
 
+   @ConfigProperty
    public long getBroadcastPeriod() {
       return broadcastPeriod;
    }
 
+   @ConfigProperty
    public List<String> getConnectorInfos() {
       return connectorInfos;
    }
@@ -68,6 +72,7 @@ public final class BroadcastGroupConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public BroadcastEndpointFactory getEndpointFactory() {
       return endpointFactory;
    }

@@ -18,6 +18,7 @@ package org.apache.activemq.artemis.core.config;
 
 import java.io.Serializable;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 public class WildcardConfiguration implements Serializable {
 
@@ -79,6 +80,7 @@ public class WildcardConfiguration implements Serializable {
               '}';
    }
 
+   @ConfigProperty
    public boolean isRoutingEnabled() {
       return routingEnabled;
    }
@@ -88,10 +90,12 @@ public class WildcardConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public char getAnyWords() {
       return anyWords;
    }
 
+   @ConfigProperty
    public String getAnyWordsString() {
       return anyWordsString;
    }
@@ -103,10 +107,12 @@ public class WildcardConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public char getDelimiter() {
       return delimiter;
    }
 
+   @ConfigProperty
    public String getDelimiterString() {
       return delimiterString;
    }
@@ -117,10 +123,12 @@ public class WildcardConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public char getSingleWord() {
       return singleWord;
    }
 
+   @ConfigProperty
    public String getSingleWordString() {
       return singleWordString;
    }

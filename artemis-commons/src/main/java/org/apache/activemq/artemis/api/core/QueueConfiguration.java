@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.io.StringReader;
 import java.util.Map;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.utils.CompositeAddress;
 import org.apache.activemq.artemis.utils.JsonLoader;
@@ -323,6 +324,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Long getId() {
       return id;
    }
@@ -335,10 +337,12 @@ public class QueueConfiguration implements Serializable {
    /**
     * {@return the name of the address; if the address is {@code null} then return the value of {@link #getName()}}
     */
+   @ConfigProperty
    public SimpleString getAddress() {
       return Objects.requireNonNullElse(address, getName());
    }
 
+   @ConfigProperty
    public boolean isAddressNull() {
       return address == null;
    }
@@ -371,6 +375,7 @@ public class QueueConfiguration implements Serializable {
       return setAddress(SimpleString.of(address));
    }
 
+   @ConfigProperty
    public SimpleString getName() {
       return name;
    }
@@ -403,6 +408,7 @@ public class QueueConfiguration implements Serializable {
       return setName(SimpleString.of(name));
    }
 
+   @ConfigProperty
    public RoutingType getRoutingType() {
       return routingType;
    }
@@ -412,6 +418,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getFilterString() {
       return filterString;
    }
@@ -444,6 +451,7 @@ public class QueueConfiguration implements Serializable {
    /**
     * defaults to {@code true}
     */
+   @ConfigProperty
    public Boolean isDurable() {
       return Objects.requireNonNullElse(durable, true);
    }
@@ -453,6 +461,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getUser() {
       return user;
    }
@@ -466,6 +475,7 @@ public class QueueConfiguration implements Serializable {
       return setUser(SimpleString.of(user));
    }
 
+   @ConfigProperty
    public Integer getMaxConsumers() {
       return maxConsumers;
    }
@@ -475,6 +485,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Boolean isExclusive() {
       return exclusive;
    }
@@ -484,6 +495,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Boolean isLastValue() {
       return lastValue;
    }
@@ -493,6 +505,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getLastValueKey() {
       return lastValueKey;
    }
@@ -506,6 +519,7 @@ public class QueueConfiguration implements Serializable {
       return setLastValueKey(SimpleString.of(lastValueKey));
    }
 
+   @ConfigProperty
    public Boolean isNonDestructive() {
       return nonDestructive;
    }
@@ -515,6 +529,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Boolean isPurgeOnNoConsumers() {
       return purgeOnNoConsumers;
    }
@@ -524,6 +539,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Boolean isEnabled() {
       return enabled;
    }
@@ -534,6 +550,7 @@ public class QueueConfiguration implements Serializable {
    }
 
 
+   @ConfigProperty
    public Integer getConsumersBeforeDispatch() {
       return consumersBeforeDispatch;
    }
@@ -543,6 +560,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Long getDelayBeforeDispatch() {
       return delayBeforeDispatch;
    }
@@ -552,6 +570,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Integer getConsumerPriority() {
       return consumerPriority;
    }
@@ -561,6 +580,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Boolean isGroupRebalance() {
       return groupRebalance;
    }
@@ -570,6 +590,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Boolean isGroupRebalancePauseDispatch() {
       return groupRebalancePauseDispatch;
    }
@@ -579,6 +600,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Integer getGroupBuckets() {
       return groupBuckets;
    }
@@ -588,6 +610,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public SimpleString getGroupFirstKey() {
       return groupFirstKey;
    }
@@ -601,6 +624,7 @@ public class QueueConfiguration implements Serializable {
       return setGroupFirstKey(SimpleString.of(groupFirstKey));
    }
 
+   @ConfigProperty
    public Boolean isAutoDelete() {
       return autoDelete;
    }
@@ -610,6 +634,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Long getAutoDeleteDelay() {
       return autoDeleteDelay;
    }
@@ -619,6 +644,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Long getAutoDeleteMessageCount() {
       return autoDeleteMessageCount;
    }
@@ -628,6 +654,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Long getRingSize() {
       return ringSize;
    }
@@ -640,6 +667,7 @@ public class QueueConfiguration implements Serializable {
    /**
     * defaults to {@code false}
     */
+   @ConfigProperty
    public Boolean isConfigurationManaged() {
       return Objects.requireNonNullElse(configurationManaged, false);
    }
@@ -652,6 +680,7 @@ public class QueueConfiguration implements Serializable {
    /**
     * defaults to {@code false}
     */
+   @ConfigProperty
    public Boolean isTemporary() {
       return Objects.requireNonNullElse(temporary, false);
    }
@@ -661,6 +690,7 @@ public class QueueConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Boolean isAutoCreateAddress() {
       return autoCreateAddress;
    }
@@ -673,6 +703,7 @@ public class QueueConfiguration implements Serializable {
    /**
     * defaults to {@code false}
     */
+   @ConfigProperty
    public Boolean isInternal() {
       return Objects.requireNonNullElse(internal, false);
    }
@@ -685,6 +716,7 @@ public class QueueConfiguration implements Serializable {
    /**
     * defaults to {@code false}
     */
+   @ConfigProperty
    public Boolean isTransient() {
       return Objects.requireNonNullElse(_transient, false);
    }
@@ -697,6 +729,7 @@ public class QueueConfiguration implements Serializable {
    /**
     * defaults to {@code false}
     */
+   @ConfigProperty
    public Boolean isAutoCreated() {
       return Objects.requireNonNullElse(autoCreated, false);
    }
@@ -711,6 +744,7 @@ public class QueueConfiguration implements Serializable {
     *
     * defaults to {@code false}
     */
+   @ConfigProperty
    public Boolean isFqqn() {
       return Objects.requireNonNullElse(fqqn, Boolean.FALSE);
    }
@@ -906,6 +940,7 @@ public class QueueConfiguration implements Serializable {
              Objects.equals(fqqn, other.fqqn);
    }
 
+   @ConfigProperty
    public boolean isMirrorQueue() {
       return isInternal() && name != null && name.toString().startsWith(MIRROR_ADDRESS);
    }

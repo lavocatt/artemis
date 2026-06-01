@@ -19,6 +19,7 @@ package org.apache.activemq.artemis.core.config;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 public class ConnectorServiceConfiguration implements Serializable {
 
@@ -33,18 +34,22 @@ public class ConnectorServiceConfiguration implements Serializable {
    public ConnectorServiceConfiguration() {
    }
 
+   @ConfigProperty
    public String getConnectorName() {
       return name;
    }
 
+   @ConfigProperty
    public String getFactoryClassName() {
       return factoryClassName;
    }
 
+   @ConfigProperty
    public Map<String, Object> getParams() {
       return params;
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }

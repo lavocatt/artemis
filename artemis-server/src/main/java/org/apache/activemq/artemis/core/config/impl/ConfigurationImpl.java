@@ -69,6 +69,9 @@ import java.util.zip.CheckedInputStream;
 import java.util.zip.Checksum;
 
 import org.apache.activemq.artemis.api.config.ActiveMQDefaultConfiguration;
+import org.apache.activemq.artemis.api.config.annotation.ByteNotation;
+import org.apache.activemq.artemis.api.config.annotation.ConfigMap;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 import org.apache.activemq.artemis.api.core.BroadcastEndpointFactory;
 import org.apache.activemq.artemis.api.core.BroadcastGroupConfiguration;
 import org.apache.activemq.artemis.api.core.DiscoveryGroupConfiguration;
@@ -506,6 +509,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return jsonStatus;
    }
 
+   @ConfigProperty
    @Override
    public String getJournalRetentionDirectory() {
       return journalRetentionDirectory;
@@ -526,6 +530,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       }
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getJournalRetentionPeriod() {
       return this.journalRetentionPeriod;
@@ -550,6 +556,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       }
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getJournalRetentionMaxBytes() {
       return journalRetentionMaxBytes;
@@ -567,11 +575,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public String getSystemPropertyPrefix() {
       return systemPropertyPrefix;
    }
 
+   @ConfigProperty
    public String getBrokerPropertiesKeySurround() {
       return brokerPropertiesKeySurround;
    }
@@ -626,7 +636,14 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       try (CheckedInputStream checkedInputStream = new CheckedInputStream(new FileInputStream(file), new Adler32())) {
          try {
             if (file.getName().endsWith(".json")) {
-               brokerProperties.loadJson(configuration, checkedInputStream);
+               byte[] jsonBytes = checkedInputStream.readAllBytes();
+               String jsonContent = new String(jsonBytes, java.nio.charset.StandardCharsets.UTF_8);
+
+               JsonSchemaValidator.validateJsonConfig(jsonContent);
+
+               try (java.io.Reader reader = new java.io.StringReader(jsonContent)) {
+                  brokerProperties.loadJson(configuration, reader);
+               }
             } else {
                brokerProperties.load(checkedInputStream);
             }
@@ -639,6 +656,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       }
       parsePrefixedProperties(this, file.getName(), brokerProperties, null);
    }
+
 
    public void parsePrefixedProperties(Properties properties, String prefix) throws Exception {
       parsePrefixedProperties(this, "system-" + prefix, properties, prefix);
@@ -1035,6 +1053,149 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       }
    }
 
+   public void exportAsJson(File file) throws Exception {
+      JsonExporterSpi exporter = loadJsonExporter();
+      if (exporter == null) {
+         throw new IllegalStateException(
+            "JSON exporter not found on classpath. " +
+            "Add artemis-jsonschema JAR (built with -Pgenerate-schema) to the classpath.");
+      }
+
+      LinkedHashMap<String, String> props = exportToMap();
+      String json = exporter.toJson(props);
+
+      try (FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8)) {
+         writer.write(json);
+      }
+   }
+
+   public LinkedHashMap<String, String> exportToMap() throws Exception {
+      LinkedHashMap<String, String> result = new LinkedHashMap<>();
+      final BeanUtilsBean beanUtilsBean = new BeanUtilsBean();
+      beanUtilsBean.getPropertyUtils().addBeanIntrospector(new FluentPropertyBeanIntrospectorWithIgnores());
+      exportToMap(beanUtilsBean, new Stack<String>(), result, this);
+      return result;
+   }
+
+   private void exportToMap(BeanUtilsBean beanUtils, Stack<String> nested,
+                            LinkedHashMap<String, String> result, Object value) {
+      if (value instanceof Collection collection) {
+         if (!collection.isEmpty()) {
+            if (collection.stream().findFirst().orElseThrow() instanceof String) {
+               result.put(buildKey(nested), (String) collection.stream().collect(Collectors.joining(",")));
+            } else if (collection instanceof EnumSet enumSet) {
+               result.put(buildKey(nested), (String) enumSet.stream().map(Object::toString).collect(Collectors.joining(",")));
+            } else {
+               Stream stream = collection.stream();
+               if (collection.stream().findFirst().orElseThrow() instanceof AMQPBrokerConnectionElement) {
+                  String collectionName = nested.peek();
+                  AMQPBrokerConnectionAddressType subsetType = AMQPBrokerConnectionAddressType.valueOf(
+                     collectionName.substring(0, collectionName.length() - 1).toUpperCase(Locale.ENGLISH));
+                  stream = stream.filter((Object el) -> subsetType == ((AMQPBrokerConnectionElement) el).getType());
+               }
+               stream.forEach((Consumer<Object>) o -> {
+                  nested.push(extractName(o));
+                  exportToMap(beanUtils, nested, result, o);
+                  nested.pop();
+               });
+            }
+         }
+      } else if (value instanceof Map map) {
+         if (!map.isEmpty()) {
+            Stream<Map.Entry<?, ?>> stream = map.entrySet().stream();
+            if (map.values().stream().findFirst().orElseThrow() instanceof FederationPolicy) {
+               final Class filterOn = "addressPolicies".equals(nested.peek())
+                  ? FederationAddressPolicyConfiguration.class
+                  : FederationQueuePolicyConfiguration.class;
+               stream = stream.filter((Map.Entry<?, ?> entry) -> filterOn.isAssignableFrom(entry.getClass()));
+            }
+            stream.forEach(entry -> {
+               nested.push(String.valueOf(entry.getKey()));
+               exportToMap(beanUtils, nested, result, entry.getValue());
+               nested.pop();
+            });
+         }
+      } else if (isComplexConfigObject(value)) {
+         if (value instanceof BrokerConnectConfiguration brokerConnectConfiguration) {
+            nested.push("uri");
+            result.put(buildKey(nested), brokerConnectConfiguration.getUri());
+            nested.pop();
+         } else if (value instanceof AMQPBrokerConnectionElement connectionElement) {
+            nested.push("type");
+            result.put(buildKey(nested), String.valueOf(connectionElement.getType()));
+            nested.pop();
+         } else if (value instanceof HAPolicyConfiguration haPolicyConfiguration) {
+            result.put(buildKey(nested), String.valueOf(haPolicyConfiguration.getType()));
+         } else if (value instanceof StoreConfiguration storeConfiguration) {
+            result.put(buildKey(nested), String.valueOf(storeConfiguration.getStoreType()));
+         } else if (value instanceof NamedPropertyConfiguration namedPropertyConfiguration) {
+            result.put(buildKey(nested), namedPropertyConfiguration.getName());
+         } else if (value instanceof BroadcastEndpointFactory broadcastEndpointFactory) {
+            result.put(buildKey(nested), broadcastEndpointFactory.getClass().getCanonicalName() + ".class");
+         } else if (value instanceof ActiveMQMetricsPlugin plugin) {
+            result.put(buildKey(nested), plugin.getClass().getCanonicalName() + ".class");
+            nested.push("init");
+            result.put(buildKey(nested), "");
+            nested.pop();
+         }
+         Arrays.stream(beanUtils.getPropertyUtils().getPropertyDescriptors(value)).filter(propertyDescriptor -> {
+            if (isIgnored(value.getClass(), propertyDescriptor)) {
+               return false;
+            }
+            final Method descriptorReadMethod = propertyDescriptor.getReadMethod();
+            if (descriptorReadMethod == null) {
+               return false;
+            }
+            Method descriptorWriteMethod = propertyDescriptor.getWriteMethod();
+            if (descriptorWriteMethod == null) {
+               final Class type = propertyDescriptor.getPropertyType();
+               return Map.class.isAssignableFrom(type) || Collection.class.isAssignableFrom(type);
+            }
+            return true;
+         }).sorted((a, b) -> String.CASE_INSENSITIVE_ORDER.compare(a.getName(), b.getName())).forEach(propertyDescriptor -> {
+            Object attributeValue = null;
+            try {
+               attributeValue = propertyDescriptor.getReadMethod().invoke(value, null);
+            } catch (Exception e) {
+               throw new RuntimeException("accessing: " + propertyDescriptor.getName() + "@" + nested, e);
+            }
+            if (attributeValue != null) {
+               nested.push(propertyDescriptor.getName());
+               exportToMap(beanUtils, nested, result, attributeValue);
+               nested.pop();
+            }
+         });
+      } else {
+         result.put(buildKey(nested), value == null ? "" : String.valueOf(value));
+      }
+   }
+
+   private String buildKey(Stack<String> nested) {
+      return nested.stream().sequential().map(ConfigurationImpl::quote).collect(Collectors.joining("."));
+   }
+
+   private static volatile JsonExporterSpi jsonExporterInstance;
+   private static volatile boolean jsonExporterLookupDone;
+
+   private static JsonExporterSpi loadJsonExporter() {
+      if (jsonExporterLookupDone) {
+         return jsonExporterInstance;
+      }
+      synchronized (ConfigurationImpl.class) {
+         if (jsonExporterLookupDone) {
+            return jsonExporterInstance;
+         }
+         java.util.Iterator<JsonExporterSpi> it =
+            java.util.ServiceLoader.load(JsonExporterSpi.class).iterator();
+         if (it.hasNext()) {
+            jsonExporterInstance = it.next();
+         }
+         jsonExporterLookupDone = true;
+         return jsonExporterInstance;
+      }
+   }
+
+   @ConfigProperty(hotReloadable = true)
    @Override
    public Map<String, JaasAppConfiguration> getJaasConfigs() {
       return jaasConfigs;
@@ -1320,11 +1481,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return !getClusterConfigurations().isEmpty();
    }
 
+   @ConfigProperty
    @Override
    public boolean isPersistenceEnabled() {
       return persistenceEnabled;
    }
 
+   @ConfigProperty
    @Override
    public int getMaxDiskUsage() {
       return maxDiskUsage;
@@ -1336,6 +1499,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getMinDiskFree() {
       return minDiskFree;
@@ -1353,6 +1518,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getGlobalMaxSize() {
       if (globalMaxSize == null) {
@@ -1364,6 +1531,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return globalMaxSize;
    }
 
+   @ConfigProperty
    @Override
    public int getGlobalMaxSizePercentOfJvmMaxMemory() {
       return globalMaxSizePercentOfJvmMaxMemory;
@@ -1381,6 +1549,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getGlobalMaxMessages() {
       if (globalMaxMessages == null) {
@@ -1401,11 +1571,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getMaxRedeliveryRecords() {
       return maxRedeliveryRecords;
    }
 
+   @ConfigProperty
    @Override
    public boolean isJournalDatasync() {
       return journalDatasync;
@@ -1417,6 +1589,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getFileDeployerScanPeriod() {
       return fileDeploymentScanPeriod;
@@ -1428,6 +1602,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isPersistDeliveryCountBeforeDelivery() {
       return persistDeliveryCountBeforeDelivery;
@@ -1439,6 +1614,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getScheduledThreadPoolMaxSize() {
       return scheduledThreadPoolMaxSize;
@@ -1450,6 +1626,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getThreadPoolMaxSize() {
       return threadPoolMaxSize;
@@ -1461,6 +1638,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getSecurityInvalidationInterval() {
       return securityInvalidationInterval;
@@ -1472,6 +1651,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getAuthenticationCacheSize() {
       return authenticationCacheSize;
@@ -1483,6 +1664,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getAuthorizationCacheSize() {
       return authorizationCacheSize;
@@ -1494,6 +1677,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getConnectionTTLOverride() {
       return connectionTTLOverride;
@@ -1505,6 +1690,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isAmqpUseCoreSubscriptionNaming() {
       return amqpUseCoreSubscriptionNaming;
@@ -1528,6 +1714,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public List<String> getIncomingInterceptorClassNames() {
       return incomingInterceptorClassNames;
@@ -1539,6 +1726,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public List<String> getOutgoingInterceptorClassNames() {
       return outgoingInterceptorClassNames;
@@ -1550,6 +1738,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigMap
+   @ConfigProperty(hotReloadable = true)
    @Override
    public Set<TransportConfiguration> getAcceptorConfigurations() {
       return acceptorConfigs;
@@ -1584,6 +1774,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty(hotReloadable = true)
    @Override
    public Map<String, TransportConfiguration> getConnectorConfigurations() {
       return connectorConfigs;
@@ -1624,6 +1815,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public GroupingHandlerConfiguration getGroupingHandlerConfiguration() {
       return groupingHandlerConfiguration;
@@ -1635,6 +1827,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigMap
+   @ConfigProperty(hotReloadable = true)
    @Override
    public List<BridgeConfiguration> getBridgeConfigurations() {
       return bridgeConfigurations;
@@ -1651,6 +1845,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigMap
+   @ConfigProperty
    @Override
    public List<BroadcastGroupConfiguration> getBroadcastGroupConfigurations() {
       return broadcastGroupConfigurations;
@@ -1668,6 +1864,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigMap
+   @ConfigProperty
    @Override
    public List<ClusterConnectionConfiguration> getClusterConfigurations() {
       return clusterConfigurations;
@@ -1703,6 +1901,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this.amqpBrokerConnectConfigurations;
    }
 
+   @ConfigMap
+   @ConfigProperty(hotReloadable = true)
    public List<AMQPBrokerConnectConfiguration> getAMQPConnections() {
       return this.amqpBrokerConnectConfigurations;
    }
@@ -1726,6 +1926,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigMap
+   @ConfigProperty(hotReloadable = true)
    @Override
    public List<DivertConfiguration> getDivertConfigurations() {
       return divertConfigurations;
@@ -1743,6 +1945,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigMap
+   @ConfigProperty(hotReloadable = true)
    @Override
    public List<ConnectionRouterConfiguration> getConnectionRouters() {
       return connectionRouters;
@@ -1803,6 +2007,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigMap
+   @ConfigProperty(hotReloadable = true)
    @Override
    public List<CoreAddressConfiguration> getAddressConfigurations() {
       return addressConfigurations;
@@ -1820,6 +2026,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public Map<String, DiscoveryGroupConfiguration> getDiscoveryGroupConfigurations() {
       return discoveryGroupConfigurations;
@@ -1838,6 +2045,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getIDCacheSize() {
       return idCacheSize;
@@ -1849,6 +2057,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isPersistIDCache() {
       return persistIDCache;
@@ -1865,6 +2074,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return subFolder(getBindingsDirectory());
    }
 
+   @ConfigProperty
    @Override
    public String getBindingsDirectory() {
       return bindingsDirectory;
@@ -1876,6 +2086,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getPageMaxConcurrentIO() {
       return maxConcurrentPageIO;
@@ -1887,6 +2098,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isReadWholePage() {
       return readWholePage;
@@ -1903,6 +2115,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return subFolder(getJournalDirectory());
    }
 
+   @ConfigProperty
    @Override
    public String getJournalDirectory() {
       return journalDirectory;
@@ -1929,10 +2142,12 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public String getNodeManagerLockDirectory() {
       return nodeManagerLockDirectory;
    }
+   @ConfigProperty
    @Override
    public JournalType getJournalType() {
       return journalType;
@@ -1949,6 +2164,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return subFolder(getPagingDirectory());
    }
 
+   @ConfigProperty
    @Override
    public String getPagingDirectory() {
       return pagingDirectory;
@@ -1960,6 +2176,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isJournalSyncTransactional() {
       return journalSyncTransactional;
@@ -1971,6 +2188,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isJournalSyncNonTransactional() {
       return journalSyncNonTransactional;
@@ -1982,6 +2200,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalFileSize() {
       return journalFileSize;
@@ -1993,6 +2212,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalPoolFiles() {
       return journalPoolFiles;
@@ -2007,6 +2227,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalMinFiles() {
       return journalMinFiles;
@@ -2018,6 +2239,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isLogJournalWriteRate() {
       return logJournalWriteRate;
@@ -2029,6 +2251,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isCreateBindingsDir() {
       return createBindingsDir;
@@ -2040,6 +2263,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isCreateJournalDir() {
       return createJournalDir;
@@ -2065,6 +2289,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public WildcardConfiguration getWildcardConfiguration() {
       return wildcardConfiguration;
@@ -2076,6 +2301,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getTransactionTimeout() {
       return transactionTimeout;
@@ -2087,6 +2314,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getTransactionTimeoutScanPeriod() {
       return transactionTimeoutScanPeriod;
@@ -2098,6 +2327,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getMessageExpiryScanPeriod() {
       return messageExpiryScanPeriod;
@@ -2109,6 +2340,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getMessageExpiryThreadPriority() {
       return messageExpiryThreadPriority;
@@ -2120,6 +2352,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getAddressQueueScanPeriod() {
       return addressQueueScanPeriod;
@@ -2131,6 +2365,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isSecurityEnabled() {
       return securityEnabled;
@@ -2142,6 +2377,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isGracefulShutdownEnabled() {
       return gracefulShutdownEnabled;
@@ -2153,6 +2389,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getGracefulShutdownTimeout() {
       return gracefulShutdownTimeout;
@@ -2164,6 +2402,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isJMXManagementEnabled() {
       return jmxManagementEnabled;
@@ -2175,6 +2414,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isJMXNotificationEnabled() {
       return jmxNotificationEnabled;
@@ -2186,6 +2426,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public String getJMXDomain() {
       return jmxDomain;
@@ -2197,6 +2438,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isJMXUseBrokerName() {
       return jmxUseBrokerName;
@@ -2208,6 +2450,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public String getLargeMessagesDirectory() {
       return largeMessagesDirectory;
@@ -2224,6 +2467,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isMessageCounterEnabled() {
       return messageCounterEnabled;
@@ -2235,6 +2479,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getMessageCounterSamplePeriod() {
       return messageCounterSamplePeriod;
@@ -2246,6 +2492,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getMessageCounterMaxDayHistory() {
       return messageCounterMaxDayHistory;
@@ -2257,6 +2504,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public SimpleString getManagementAddress() {
       return managementAddress;
@@ -2268,6 +2516,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public SimpleString getManagementNotificationAddress() {
       return managementNotificationAddress;
@@ -2279,6 +2528,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public String getClusterUser() {
       return clusterUser;
@@ -2290,6 +2540,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public String getClusterPassword() {
       return clusterPassword;
@@ -2310,11 +2561,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalCompactMinFiles() {
       return journalCompactMinFiles;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalCompactPercentage() {
       return journalCompactPercentage;
@@ -2326,6 +2579,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalFileOpenTimeout() {
       return journalFileOpenTimeout;
@@ -2343,6 +2597,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getServerDumpInterval() {
       return serverDumpInterval;
@@ -2354,6 +2610,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getMemoryWarningThreshold() {
       return memoryWarningThreshold;
@@ -2365,6 +2622,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getMemoryMeasureInterval() {
       return memoryMeasureInterval;
@@ -2376,6 +2635,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalMaxIO_AIO() {
       return journalMaxIO_AIO;
@@ -2387,6 +2647,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalBufferTimeout_AIO() {
       return journalBufferTimeout_AIO;
@@ -2409,6 +2670,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalBufferSize_AIO() {
       return journalBufferSize_AIO;
@@ -2420,6 +2682,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalMaxIO_NIO() {
       return journalMaxIO_NIO;
@@ -2442,6 +2705,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalBufferSize_NIO() {
       return journalBufferSize_NIO;
@@ -2453,6 +2717,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty(hotReloadable = true)
    @Override
    public Map<String, AddressSettings> getAddressSettings() {
       return addressSettings;
@@ -2500,6 +2765,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return clearAddressSettings();
    }
 
+   @ConfigProperty
    @Override
    public Map<String, ResourceLimitSettings> getResourceLimitSettings() {
       return resourceLimitSettings;
@@ -2521,6 +2787,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this.addResourceLimitSettings(resourceLimitSettings);
    }
 
+   @ConfigProperty(hotReloadable = true)
    @Override
    public Map<String, Set<Role>> getSecurityRoles() {
       for (SecuritySettingPlugin securitySettingPlugin : securitySettingPlugins) {
@@ -2565,11 +2832,15 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return securityRoleNameMappings;
    }
 
+   @ConfigMap
+   @ConfigProperty
    @Override
    public List<ConnectorServiceConfiguration> getConnectorServiceConfigurations() {
       return this.connectorServiceConfigurations;
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<SecuritySettingPlugin> getSecuritySettingPlugins() {
       return this.securitySettingPlugins;
@@ -2584,6 +2855,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return null;
    }
 
+   @ConfigProperty
    @Override
    public MetricsConfiguration getMetricsConfiguration() {
       return this.metricsConfiguration;
@@ -2679,6 +2951,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       }
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerBasePlugin> getBrokerPlugins() {
       return brokerPlugins;
@@ -2689,61 +2963,85 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       registerBrokerPlugin(type);
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerConnectionPlugin> getBrokerConnectionPlugins() {
       return brokerConnectionPlugins;
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerSessionPlugin> getBrokerSessionPlugins() {
       return brokerSessionPlugins;
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerConsumerPlugin> getBrokerConsumerPlugins() {
       return brokerConsumerPlugins;
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerAddressPlugin> getBrokerAddressPlugins() {
       return brokerAddressPlugins;
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerQueuePlugin> getBrokerQueuePlugins() {
       return brokerQueuePlugins;
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerBindingPlugin> getBrokerBindingPlugins() {
       return brokerBindingPlugins;
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerMessagePlugin> getBrokerMessagePlugins() {
       return brokerMessagePlugins;
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerBridgePlugin> getBrokerBridgePlugins() {
       return brokerBridgePlugins;
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerCriticalPlugin> getBrokerCriticalPlugins() {
       return brokerCriticalPlugins;
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerFederationPlugin> getBrokerFederationPlugins() {
       return brokerFederationPlugins;
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<AMQPFederationBrokerPlugin> getBrokerAMQPFederationPlugins() {
       return brokerAMQPFederationPlugins;
    }
 
+   @ConfigMap
+   @ConfigProperty
    @Override
    public List<FederationConfiguration> getFederationConfigurations() {
       return federationConfigurations;
@@ -2753,6 +3051,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       federationConfigurations.add(federationConfiguration);
    }
 
+   @ConfigMap(keyMethod = "getClass().getCanonicalName()")
+   @ConfigProperty
    @Override
    public List<ActiveMQServerResourcePlugin> getBrokerResourcePlugins() {
       return brokerResourcePlugins;
@@ -2875,11 +3175,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public String getPasswordCodec() {
       return passwordCodec;
    }
 
+   @ConfigProperty
    @Override
    public String getName() {
       return name;
@@ -2935,11 +3237,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
 
    }
 
+   @ConfigProperty
    @Override
    public boolean isResolveProtocols() {
       return resolveProtocols;
    }
 
+   @ConfigProperty
    @Override
    public StoreConfiguration getStoreConfiguration() {
       return storeConfiguration;
@@ -2951,6 +3255,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isPopulateValidatedUser() {
       return populateValidatedUser;
@@ -2962,6 +3267,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isRejectEmptyValidatedUser() {
       return rejectEmptyValidatedUser;
@@ -2973,6 +3279,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getConnectionTtlCheckInterval() {
       return connectionTtlCheckInterval;
@@ -3121,11 +3429,14 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getJournalLockAcquisitionTimeout() {
       return journalLockAcquisitionTimeout;
    }
 
+   @ConfigProperty
    @Override
    public HAPolicyConfiguration getHAPolicyConfiguration() {
       return haPolicyConfiguration;
@@ -3148,6 +3459,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getConfigurationFileRefreshPeriod() {
       return configurationFileRefreshPeriod;
@@ -3159,11 +3472,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getDiskScanPeriod() {
       return diskScanPeriod;
    }
 
+   @ConfigProperty
    @Override
    public String getInternalNamingPrefix() {
       return internalNamingPrefix;
@@ -3187,6 +3502,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public String getNetworkCheckList() {
       return networkCheckList;
@@ -3198,6 +3514,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public String getNetworkCheckURLList() {
       return networkURLList;
@@ -3212,6 +3529,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getNetworkCheckPeriod() {
       return this.networkCheckPeriod;
@@ -3226,6 +3545,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getNetworkCheckTimeout() {
       return this.networkCheckTimeout;
@@ -3243,11 +3563,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public String getNetworkCheckNIC() {
       return networkCheckNIC;
    }
 
+   @ConfigProperty
    @Override
    public String getNetworkCheckPingCommand() {
       return networkCheckPingCommand;
@@ -3259,6 +3581,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public String getNetworkCheckPing6Command() {
       return networkCheckPing6Command;
@@ -3270,6 +3593,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isCriticalAnalyzer() {
       return criticalAnalyzer;
@@ -3281,6 +3605,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getCriticalAnalyzerTimeout() {
       return criticalAnalyzerTimeout;
@@ -3292,6 +3618,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getCriticalAnalyzerCheckPeriod() {
       if (criticalAnalyzerCheckPeriod <= 0) {
@@ -3306,6 +3634,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public CriticalAnalyzerPolicy getCriticalAnalyzerPolicy() {
       return criticalAnalyzerPolicy;
@@ -3317,6 +3646,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getPageSyncTimeout() {
       return pageSyncTimeout;
@@ -3349,6 +3679,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return setUuidNamespace(temporaryQueueNamespace);
    }
 
+   @ConfigProperty
    @Override
    public String getUuidNamespace() {
       return uuidNamespace;
@@ -3360,6 +3691,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getJournalMaxAtticFiles() {
       return journalMaxAtticFilesFiles;
@@ -3371,6 +3703,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getMqttSessionScanInterval() {
       return mqttSessionScanInterval;
@@ -3382,6 +3716,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ByteNotation
+   @ConfigProperty
    @Override
    public long getMqttSessionStatePersistenceTimeout() {
       return mqttSessionStatePersistenceTimeout;
@@ -3393,6 +3729,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isMqttSubscriptionPersistenceEnabled() {
       return mqttSessionStatePersistenceEnabled;
@@ -3404,6 +3741,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isSuppressSessionNotifications() {
       return suppressSessionNotifications;
@@ -3426,6 +3764,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       this.jsonStatus = JsonUtil.mergeAndUpdate(getJsonStatus(), update);
    }
 
+   @ConfigProperty
    @Override
    public String getLiteralMatchMarkers() {
       return literalMatchMarkers;
@@ -3444,11 +3783,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isLargeMessageSync() {
       return largeMessageSync;
    }
 
+   @ConfigProperty
    @Override
    public String getViewPermissionMethodMatchPattern() {
       return viewPermissionMethodMatchPattern;
@@ -3459,6 +3800,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       viewPermissionMethodMatchPattern = permissionMatchPattern;
    }
 
+   @ConfigProperty
    @Override
    public boolean isManagementMessageRbac() {
       return managementMessagesRbac;
@@ -3469,6 +3811,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       this.managementMessagesRbac = val;
    }
 
+   @ConfigProperty
    @Override
    public String getManagementRbacPrefix() {
       return managementRbacPrefix;
@@ -3480,11 +3823,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
    }
 
 
+   @ConfigProperty
    @Override
    public int getMirrorAckManagerQueueAttempts() {
       return mirrorAckManagerQueueAttempts;
    }
 
+   @ConfigProperty
    @Override
    public boolean isMirrorAckManagerWarnUnacked() {
       return mirrorAckManagerWarnUnacked;
@@ -3509,11 +3854,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty(hotReloadable = true)
    @Override
    public boolean isPurgePageFolders() {
       return purgePageFolders;
    }
 
+   @ConfigProperty
    @Override
    public int getMirrorAckManagerPageAttempts() {
       return this.mirrorAckManagerPageAttempts;
@@ -3526,6 +3873,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public int getMirrorAckManagerRetryDelay() {
       return mirrorAckManagerRetryDelay;
@@ -3538,6 +3886,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigProperty
    @Override
    public boolean isMirrorPageTransaction() {
       return mirrorPageTransaction;
@@ -3550,6 +3899,8 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       return this;
    }
 
+   @ConfigMap
+   @ConfigProperty
    @Override
    public Set<LockCoordinatorConfiguration> getLockCoordinatorConfigurations() {
       return lockCoordinatorConfigurations;
@@ -3560,6 +3911,7 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
       lockCoordinatorConfigurations.add(configuration);
    }
 
+   @ConfigProperty
    @Override
    public List<String> getFederationDownstreamAuthorization() {
       return downstreamAuthorization;
@@ -3900,6 +4252,13 @@ public class ConfigurationImpl extends javax.security.auth.login.Configuration i
                case TRUE:
                case FALSE:
                   put(propertyKey, String.valueOf(jsonValue));
+                  break;
+               case ARRAY:
+                  put(propertyKey, jsonValue.asJsonArray().stream()
+                     .map(v -> v.getValueType() == JsonValue.ValueType.STRING
+                        ? ((JsonString) v).getString()
+                        : String.valueOf(v))
+                     .collect(java.util.stream.Collectors.joining(",")));
                   break;
                default:
                   throw new IllegalStateException("JSON value type not supported: " + jsonValueType);

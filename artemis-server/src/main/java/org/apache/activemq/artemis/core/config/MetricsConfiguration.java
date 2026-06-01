@@ -17,6 +17,7 @@
 package org.apache.activemq.artemis.core.config;
 
 import java.io.Serializable;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.config.ActiveMQDefaultConfiguration;
 import org.apache.activemq.artemis.core.server.metrics.ActiveMQMetricsPlugin;
@@ -35,6 +36,7 @@ public class MetricsConfiguration implements Serializable {
    private boolean executorServices = ActiveMQDefaultConfiguration.getDefaultExecutorServiceMetrics();
    private ActiveMQMetricsPlugin plugin;
 
+   @ConfigProperty
    public boolean isJvmMemory() {
       return jvmMemory;
    }
@@ -44,6 +46,7 @@ public class MetricsConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isJvmGc() {
       return jvmGc;
    }
@@ -53,6 +56,7 @@ public class MetricsConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isJvmThread() {
       return jvmThread;
    }
@@ -62,6 +66,7 @@ public class MetricsConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isNettyPool() {
       return nettyPool;
    }
@@ -71,6 +76,7 @@ public class MetricsConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isFileDescriptors() {
       return fileDescriptors;
    }
@@ -80,6 +86,7 @@ public class MetricsConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isProcessor() {
       return processor;
    }
@@ -89,6 +96,7 @@ public class MetricsConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isUptime() {
       return uptime;
    }
@@ -98,6 +106,7 @@ public class MetricsConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isLogging() {
       return logging;
    }
@@ -107,6 +116,7 @@ public class MetricsConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public ActiveMQMetricsPlugin getPlugin() {
       return plugin;
    }
@@ -116,6 +126,7 @@ public class MetricsConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isSecurityCaches() {
       return securityCaches;
    }
@@ -125,6 +136,7 @@ public class MetricsConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isExecutorServices() {
       return executorServices;
    }

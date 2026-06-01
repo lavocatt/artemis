@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+import org.apache.activemq.artemis.api.config.annotation.ConfigMap;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.core.QueueConfiguration;
 import org.apache.activemq.artemis.api.core.RoutingType;
@@ -36,6 +38,7 @@ public class CoreAddressConfiguration implements Serializable {
    public CoreAddressConfiguration() {
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -45,6 +48,7 @@ public class CoreAddressConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public EnumSet<RoutingType> getRoutingTypes() {
       return routingTypes;
    }
@@ -96,6 +100,8 @@ public class CoreAddressConfiguration implements Serializable {
       return result;
    }
 
+   @ConfigProperty
+   @ConfigMap
    public List<QueueConfiguration> getQueueConfigs() {
       return queueConfigurations;
    }

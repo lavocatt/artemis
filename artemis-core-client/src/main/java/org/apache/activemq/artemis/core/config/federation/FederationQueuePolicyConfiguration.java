@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.core.ActiveMQBuffer;
 
@@ -32,6 +33,7 @@ public class FederationQueuePolicyConfiguration implements FederationPolicy<Fede
    private Integer priorityAdjustment;
    private String transformerRef;
 
+   @ConfigProperty
    @Override
    public String getName() {
       return name;
@@ -43,10 +45,12 @@ public class FederationQueuePolicyConfiguration implements FederationPolicy<Fede
       return this;
    }
 
+   @ConfigProperty
    public Set<Matcher> getIncludes() {
       return includes;
    }
 
+   @ConfigProperty
    public Set<Matcher> getExcludes() {
       return excludes;
    }
@@ -61,6 +65,7 @@ public class FederationQueuePolicyConfiguration implements FederationPolicy<Fede
       return this;
    }
 
+   @ConfigProperty
    public boolean isIncludeFederated() {
       return includeFederated;
    }
@@ -70,6 +75,7 @@ public class FederationQueuePolicyConfiguration implements FederationPolicy<Fede
       return this;
    }
 
+   @ConfigProperty
    public Integer getPriorityAdjustment() {
       return priorityAdjustment;
    }
@@ -79,6 +85,7 @@ public class FederationQueuePolicyConfiguration implements FederationPolicy<Fede
       return this;
    }
 
+   @ConfigProperty
    public String getTransformerRef() {
       return transformerRef;
    }
@@ -137,6 +144,7 @@ public class FederationQueuePolicyConfiguration implements FederationPolicy<Fede
       private String addressMatch;
       private String name;
 
+      @ConfigProperty
       public String getName() {
          if (name == null) {
             return addressMatch + queueMatch;
@@ -148,6 +156,7 @@ public class FederationQueuePolicyConfiguration implements FederationPolicy<Fede
          this.name = name;
       }
 
+      @ConfigProperty
       public String getQueueMatch() {
          return queueMatch;
       }
@@ -157,6 +166,7 @@ public class FederationQueuePolicyConfiguration implements FederationPolicy<Fede
          return this;
       }
 
+      @ConfigProperty
       public String getAddressMatch() {
          return addressMatch;
       }

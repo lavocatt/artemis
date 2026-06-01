@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.core.ActiveMQBuffer;
 
@@ -29,6 +30,7 @@ public class FederationPolicySet implements FederationPolicy<FederationPolicySet
    private String name;
    private Set<String> policyRefs = new HashSet<>();
 
+   @ConfigProperty
    @Override
    public String getName() {
       return name;
@@ -40,6 +42,7 @@ public class FederationPolicySet implements FederationPolicy<FederationPolicySet
       return this;
    }
 
+   @ConfigProperty
    public Set<String> getPolicyRefs() {
       return policyRefs;
    }

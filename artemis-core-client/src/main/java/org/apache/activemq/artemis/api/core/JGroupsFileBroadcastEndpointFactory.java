@@ -18,6 +18,10 @@ package org.apache.activemq.artemis.api.core;
 
 import org.apache.activemq.artemis.api.core.jgroups.JChannelManager;
 
+@org.apache.activemq.artemis.api.config.annotation.InitKeys({
+   @org.apache.activemq.artemis.api.config.annotation.InitKeys.Key(name = "file"),
+   @org.apache.activemq.artemis.api.config.annotation.InitKeys.Key(name = "channelName")
+})
 public class JGroupsFileBroadcastEndpointFactory implements BroadcastEndpointFactory {
 
    private String file;

@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.io.StringReader;
 import java.util.Map;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.config.ActiveMQDefaultConfiguration;
 import org.apache.activemq.artemis.api.core.ActiveMQBuffer;
@@ -125,34 +126,42 @@ public class DivertConfiguration implements Serializable, EncodingSupport {
       return this;
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
 
+   @ConfigProperty
    public String getRoutingName() {
       return routingName;
    }
 
+   @ConfigProperty
    public String getAddress() {
       return address;
    }
 
+   @ConfigProperty
    public String getForwardingAddress() {
       return forwardingAddress;
    }
 
+   @ConfigProperty
    public boolean isExclusive() {
       return exclusive;
    }
 
+   @ConfigProperty
    public String getFilterString() {
       return filterString;
    }
 
+   @ConfigProperty
    public TransformerConfiguration getTransformerConfiguration() {
       return transformerConfiguration;
    }
 
+   @ConfigProperty
    public ComponentConfigurationRoutingType getRoutingType() {
       return routingType;
    }

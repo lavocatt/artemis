@@ -23,6 +23,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
+import org.apache.activemq.artemis.api.config.annotation.MapKeys;
 
 import org.apache.activemq.artemis.core.config.TransformerConfiguration;
 
@@ -44,6 +46,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
    private String filter;
    private TransformerConfiguration transformerConfig;
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -53,6 +56,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Set<QueueMatch> getIncludes() {
       return includes;
    }
@@ -76,6 +80,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Set<QueueMatch> getExcludes() {
       return excludes;
    }
@@ -109,6 +114,8 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
       return this;
    }
 
+   @MapKeys(constantsClass = "org.apache.activemq.artemis.protocol.amqp.connect.bridge.AMQPBridgeConstants")
+   @ConfigProperty
    public Map<String, Object> getProperties() {
       return properties;
    }
@@ -127,10 +134,12 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public TransformerConfiguration getTransformerConfiguration() {
       return transformerConfig;
    }
 
+   @ConfigProperty
    public String getRemoteAddress() {
       return remoteAddress;
    }
@@ -140,6 +149,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getRemoteAddressPrefix() {
       return remoteAddressPrefix;
    }
@@ -149,6 +159,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getRemoteAddressSuffix() {
       return remoteAddressSuffix;
    }
@@ -158,6 +169,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty(enumValues = {"queue", "topic", "temporary-queue", "temporary-topic", "shared", "global"})
    public String[] getRemoteTerminusCapabilities() {
       if (remoteTerminusCapabilities != null) {
          return Arrays.copyOf(remoteTerminusCapabilities, remoteTerminusCapabilities.length);
@@ -171,6 +183,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Integer getPriority() {
       return priority;
    }
@@ -180,6 +193,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public Integer getPriorityAdjustment() {
       return priorityAdjustment;
    }
@@ -189,6 +203,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getFilter() {
       return filter;
    }
@@ -242,6 +257,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
       private String addressMatch;
       private String queueMatch;
 
+      @ConfigProperty
       public String getName() {
          return name;
       }
@@ -251,6 +267,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
          return this;
       }
 
+      @ConfigProperty
       public String getAddressMatch() {
          return addressMatch;
       }
@@ -260,6 +277,7 @@ public final class AMQPBridgeQueuePolicyElement implements Serializable {
          return this;
       }
 
+      @ConfigProperty
       public String getQueueMatch() {
          return queueMatch;
       }

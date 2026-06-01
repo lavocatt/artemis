@@ -19,6 +19,7 @@ package org.apache.activemq.artemis.core.config;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 public class LockCoordinatorConfiguration {
 
@@ -36,6 +37,7 @@ public class LockCoordinatorConfiguration {
       this.properties = properties;
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -48,6 +50,7 @@ public class LockCoordinatorConfiguration {
       return this;
    }
 
+   @ConfigProperty
    public String getLockId() {
       return lockId;
    }
@@ -60,6 +63,7 @@ public class LockCoordinatorConfiguration {
       return this;
    }
 
+   @ConfigProperty
    public String getClassName() {
       return className;
    }
@@ -69,6 +73,7 @@ public class LockCoordinatorConfiguration {
       return this;
    }
 
+   @ConfigProperty
    public int getCheckPeriod() {
       return checkPeriod;
    }
@@ -81,6 +86,7 @@ public class LockCoordinatorConfiguration {
       return this;
    }
 
+   @ConfigProperty
    public Map<String, String> getProperties() {
       return properties;
    }

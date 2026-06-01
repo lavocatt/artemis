@@ -32,6 +32,11 @@
       <!-- logging -->
       <dependency>
          <groupId>org.apache.artemis</groupId>
+         <artifactId>artemis-config-api</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.artemis</groupId>
          <artifactId>artemis-log-annotation-processor</artifactId>
          <version>${project.version}</version>
          <scope>provided</scope>
@@ -295,6 +300,15 @@
          <artifactId>hamcrest</artifactId>
          <version>${hamcrest.version}</version>
          <scope>test</scope>
+      </dependency>
+
+      <!-- JSON Schema validation library -->
+      <!-- Note: artemis-jsonschema dependency creates circular dependency with reactor -->
+      <!-- Workaround: manually add artemis-jsonschema JAR to classpath when validation is needed -->
+      <dependency>
+         <groupId>com.networknt</groupId>
+         <artifactId>json-schema-validator</artifactId>
+         <version>1.5.3</version>
       </dependency>
    </dependencies>
 

@@ -19,6 +19,7 @@ package org.apache.activemq.artemis.core.config;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.config.ActiveMQDefaultConfiguration;
 
@@ -36,6 +37,7 @@ public class ScaleDownConfiguration implements Serializable {
 
    private int commitInterval = ActiveMQDefaultConfiguration.getDefaultScaleDownCommitInterval();
 
+   @ConfigProperty
    public List<String> getConnectors() {
       return connectors;
    }
@@ -50,6 +52,7 @@ public class ScaleDownConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getDiscoveryGroup() {
       return discoveryGroup;
    }
@@ -59,6 +62,7 @@ public class ScaleDownConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getGroupName() {
       return groupName;
    }
@@ -68,6 +72,7 @@ public class ScaleDownConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getClusterName() {
       return clusterName;
    }
@@ -77,6 +82,7 @@ public class ScaleDownConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isEnabled() {
       return enabled;
    }
@@ -86,6 +92,7 @@ public class ScaleDownConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getCommitInterval() {
       return commitInterval;
    }

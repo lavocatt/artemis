@@ -35,6 +35,12 @@ import org.apache.activemq.artemis.utils.RandomUtil;
  * <p>
  * This is analogous to {@link DiscoveryGroupConfiguration}
  */
+@org.apache.activemq.artemis.api.config.annotation.InitKeys({
+   @org.apache.activemq.artemis.api.config.annotation.InitKeys.Key(name = "groupAddress"),
+   @org.apache.activemq.artemis.api.config.annotation.InitKeys.Key(name = "groupPort", type = "integer"),
+   @org.apache.activemq.artemis.api.config.annotation.InitKeys.Key(name = "localBindAddress"),
+   @org.apache.activemq.artemis.api.config.annotation.InitKeys.Key(name = "localBindPort", type = "integer")
+})
 public final class UDPBroadcastEndpointFactory implements BroadcastEndpointFactory {
 
    // You can specify a property as a default. This is useful for testsuite running.

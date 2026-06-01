@@ -18,6 +18,26 @@ package org.apache.activemq.artemis.core.config;
 
 import java.io.Serializable;
 
+import org.apache.activemq.artemis.api.config.annotation.Discriminator;
+import org.apache.activemq.artemis.core.config.ha.ColocatedPolicyConfiguration;
+import org.apache.activemq.artemis.core.config.ha.PrimaryOnlyPolicyConfiguration;
+import org.apache.activemq.artemis.core.config.ha.ReplicaPolicyConfiguration;
+import org.apache.activemq.artemis.core.config.ha.ReplicatedPolicyConfiguration;
+import org.apache.activemq.artemis.core.config.ha.ReplicationBackupPolicyConfiguration;
+import org.apache.activemq.artemis.core.config.ha.ReplicationPrimaryPolicyConfiguration;
+import org.apache.activemq.artemis.core.config.ha.SharedStoreBackupPolicyConfiguration;
+import org.apache.activemq.artemis.core.config.ha.SharedStorePrimaryPolicyConfiguration;
+
+@Discriminator(field = "type", value = {
+   @Discriminator.Mapping(subtype = PrimaryOnlyPolicyConfiguration.class, name = "PRIMARY_ONLY"),
+   @Discriminator.Mapping(subtype = ReplicatedPolicyConfiguration.class, name = "REPLICATION_PRIMARY_QUORUM_VOTING"),
+   @Discriminator.Mapping(subtype = ReplicaPolicyConfiguration.class, name = "REPLICATION_BACKUP_QUORUM_VOTING"),
+   @Discriminator.Mapping(subtype = SharedStorePrimaryPolicyConfiguration.class, name = "SHARED_STORE_PRIMARY"),
+   @Discriminator.Mapping(subtype = SharedStoreBackupPolicyConfiguration.class, name = "SHARED_STORE_BACKUP"),
+   @Discriminator.Mapping(subtype = ColocatedPolicyConfiguration.class, name = "COLOCATED"),
+   @Discriminator.Mapping(subtype = ReplicationPrimaryPolicyConfiguration.class, name = "REPLICATION_PRIMARY_LOCK_MANAGER"),
+   @Discriminator.Mapping(subtype = ReplicationBackupPolicyConfiguration.class, name = "REPLICATION_BACKUP_LOCK_MANAGER")
+})
 public interface HAPolicyConfiguration extends Serializable {
 
    enum TYPE {

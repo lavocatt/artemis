@@ -18,6 +18,7 @@ package org.apache.activemq.artemis.core.server.group.impl;
 
 import java.io.Serializable;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.config.ActiveMQDefaultConfiguration;
 import org.apache.activemq.artemis.api.core.SimpleString;
@@ -55,26 +56,32 @@ public final class GroupingHandlerConfiguration implements Serializable {
       }
    }
 
+   @ConfigProperty
    public SimpleString getName() {
       return name;
    }
 
+   @ConfigProperty
    public TYPE getType() {
       return type;
    }
 
+   @ConfigProperty
    public SimpleString getAddress() {
       return address;
    }
 
+   @ConfigProperty
    public long getTimeout() {
       return timeout;
    }
 
+   @ConfigProperty
    public long getGroupTimeout() {
       return groupTimeout;
    }
 
+   @ConfigProperty
    public long getReaperPeriod() {
       return reaperPeriod;
    }

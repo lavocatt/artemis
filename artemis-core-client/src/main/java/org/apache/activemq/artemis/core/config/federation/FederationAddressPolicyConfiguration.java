@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.core.ActiveMQBuffer;
 
@@ -35,6 +36,7 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
    private String transformerRef;
    private boolean enableDivertBindings;
 
+   @ConfigProperty
    @Override
    public String getName() {
       return name;
@@ -46,10 +48,12 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
       return this;
    }
 
+   @ConfigProperty
    public Set<Matcher> getIncludes() {
       return includes;
    }
 
+   @ConfigProperty
    public Set<Matcher> getExcludes() {
       return excludes;
    }
@@ -64,6 +68,7 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
       return this;
    }
 
+   @ConfigProperty
    public int getMaxHops() {
       return maxHops;
    }
@@ -73,6 +78,7 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
       return this;
    }
 
+   @ConfigProperty
    public Long getAutoDeleteMessageCount() {
       return autoDeleteMessageCount;
    }
@@ -82,6 +88,7 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
       return this;
    }
 
+   @ConfigProperty
    public Long getAutoDeleteDelay() {
       return autoDeleteDelay;
    }
@@ -91,6 +98,7 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
       return this;
    }
 
+   @ConfigProperty
    public Boolean getAutoDelete() {
       return autoDelete;
    }
@@ -100,6 +108,7 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
       return this;
    }
 
+   @ConfigProperty
    public String getTransformerRef() {
       return transformerRef;
    }
@@ -109,6 +118,7 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
       return this;
    }
 
+   @ConfigProperty
    public Boolean isEnableDivertBindings() {
       return enableDivertBindings;
    }
@@ -175,6 +185,7 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
 
       private String name;
 
+      @ConfigProperty
       public String getName() {
          if (name == null) {
             return addressMatch;
@@ -186,6 +197,7 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
          this.name = name;
       }
 
+      @ConfigProperty
       public String getAddressMatch() {
          return addressMatch;
       }

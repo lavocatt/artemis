@@ -18,6 +18,7 @@ package org.apache.activemq.artemis.api.core;
 
 import java.io.Serializable;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.core.client.ActiveMQClient;
 import org.apache.activemq.artemis.utils.UUIDGenerator;
@@ -52,10 +53,12 @@ public final class DiscoveryGroupConfiguration implements Serializable {
    public DiscoveryGroupConfiguration() {
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
 
+   @ConfigProperty
    public long getRefreshTimeout() {
       return refreshTimeout;
    }
@@ -70,6 +73,7 @@ public final class DiscoveryGroupConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getDiscoveryInitialWaitTimeout() {
       return discoveryInitialWaitTimeout;
    }
@@ -79,6 +83,7 @@ public final class DiscoveryGroupConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getStoppingTimeout() {
       return stoppingTimeout;
    }
@@ -87,6 +92,7 @@ public final class DiscoveryGroupConfiguration implements Serializable {
       this.stoppingTimeout = stoppingTimeout;
    }
 
+   @ConfigProperty
    public BroadcastEndpointFactory getBroadcastEndpointFactory() {
       return endpointFactory;
    }

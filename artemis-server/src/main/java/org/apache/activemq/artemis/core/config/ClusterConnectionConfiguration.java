@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import org.apache.activemq.artemis.api.config.annotation.ConfigProperty;
 
 import org.apache.activemq.artemis.api.config.ActiveMQDefaultConfiguration;
 import org.apache.activemq.artemis.api.core.DiscoveryGroupConfiguration;
@@ -96,6 +97,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       parser.populateObject(uri, this);
    }
 
+   @ConfigProperty
    public String getName() {
       return name;
    }
@@ -105,6 +107,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getAddress() {
       return address;
    }
@@ -123,6 +126,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getClientFailureCheckPeriod() {
       return clientFailureCheckPeriod;
    }
@@ -132,6 +136,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getConnectionTTL() {
       return connectionTTL;
    }
@@ -141,6 +146,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public double getRetryIntervalMultiplier() {
       return retryIntervalMultiplier;
    }
@@ -150,6 +156,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getMaxRetryInterval() {
       return maxRetryInterval;
    }
@@ -159,6 +166,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getInitialConnectAttempts() {
       return initialConnectAttempts;
    }
@@ -168,6 +176,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getReconnectAttempts() {
       return reconnectAttempts;
    }
@@ -177,6 +186,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getCallTimeout() {
       return callTimeout;
    }
@@ -186,6 +196,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getCallFailoverTimeout() {
       return callFailoverTimeout;
    }
@@ -195,6 +206,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getConnectorName() {
       return connectorName;
    }
@@ -204,6 +216,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isDuplicateDetection() {
       return duplicateDetection;
    }
@@ -213,6 +226,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public MessageLoadBalancingType getMessageLoadBalancingType() {
       return messageLoadBalancingType;
    }
@@ -222,6 +236,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getMaxHops() {
       return maxHops;
    }
@@ -231,6 +246,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getConfirmationWindowSize() {
       return confirmationWindowSize;
    }
@@ -240,6 +256,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getProducerWindowSize() {
       return producerWindowSize;
    }
@@ -249,6 +266,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public List<String> getStaticConnectors() {
       return staticConnectors;
    }
@@ -258,6 +276,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getDiscoveryGroupName() {
       return discoveryGroupName;
    }
@@ -267,6 +286,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getRetryInterval() {
       return retryInterval;
    }
@@ -276,6 +296,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public boolean isAllowDirectConnectionsOnly() {
       return allowDirectConnectionsOnly;
    }
@@ -285,6 +306,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getMinLargeMessageSize() {
       return minLargeMessageSize;
    }
@@ -294,6 +316,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public long getClusterNotificationInterval() {
       return clusterNotificationInterval;
    }
@@ -303,6 +326,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getClusterNotificationAttempts() {
       return clusterNotificationAttempts;
    }
@@ -312,6 +336,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public String getClientId() {
       return clientId;
    }
@@ -321,6 +346,7 @@ public final class ClusterConnectionConfiguration implements Serializable {
       return this;
    }
 
+   @ConfigProperty
    public int getTopologyScannerAttempts() {
       return topologyScannerAttempts;
    }

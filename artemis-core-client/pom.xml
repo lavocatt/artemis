@@ -29,6 +29,11 @@
    <name>Apache Artemis Core Client</name>
 
    <dependencies>
+      <dependency>
+         <groupId>org.apache.artemis</groupId>
+         <artifactId>artemis-config-api</artifactId>
+         <version>${project.version}</version>
+      </dependency>
       <!-- logging -->
       <dependency>
          <groupId>org.apache.artemis</groupId>

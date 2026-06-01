@@ -30,11 +30,15 @@ import org.apache.activemq.artemis.core.server.MessageReference;
 import org.apache.activemq.artemis.core.server.ServerConsumer;
 import org.apache.activemq.artemis.core.server.ServerSession;
 import org.apache.activemq.artemis.core.server.plugin.ActiveMQServerPlugin;
+import org.apache.activemq.artemis.api.config.annotation.InitKeys;
 import org.apache.activemq.artemis.spi.core.security.jaas.RolePrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 
+@InitKeys({
+   @InitKeys.Key(name = "ROLE_PROPERTY")
+})
 public class BrokerMessageAuthorizationPlugin implements ActiveMQServerPlugin {
 
    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
